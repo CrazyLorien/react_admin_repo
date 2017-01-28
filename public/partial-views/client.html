@@ -1,0 +1,42 @@
+<div class="yourDetails">
+ <form novalidate id ="bookingForm" name="bookingForm" >
+    <div class="verticalStack">
+        <label for="customerFirstName" id="firstLabel">
+            Your name <span class="mandatory" ng-show="bookingForm.firstName.$pristine || bookingForm.firstName.$error.required">*</span></label>   
+        <div class="horizontalStack">
+            <input type="text" class=""
+            name="firstName" ng-model="firstName" value="" id="customerFirstName" maxlength="50" placeholder="First" tabindex="1" required ng-pattern="/^[a-zA-Z]*$/"/>
+            <input type="text" class="lastName"  name="lastName" ng-model="lastName"  value="" id="customerLastName" maxlength="50" placeholder="Last" tabindex="2"  ng-pattern="/^[a-zA-Z]*$/"/>
+        </div>
+    </div>
+
+    <div class="verticalStack">
+        <label for="customerPhone">Contact number <span class="mandatory" ng-show="bookingForm.phone.$pristine || bookingForm.phone.$error.required">*</span></label>
+        <input type="text" name="phone" ng-model="phone" id="customerPhone" class="phone" value="" placeholder="(555) 555-5555" tabindex="3" required ng-pattern="/^[0-9-]*$/"/>
+    </div>
+    
+    <div class="verticalStack">
+        <label for="customerEmail">Email <span class="mandatory" ng-show="bookingForm.email.$pristine || bookingForm.email.$error.required">*</span></label>
+        <input type="text" class="email"
+        name="email" ng-model="email" value="" id="customerEmail" maxlength="250" placeholder="your@email.com" tabindex="4" required/>
+    </div>
+
+    <div class="verticalStack ">
+        <label for="specialRequests" class="leftlabel">
+            Special Request <span class="optional">(Optional)</span>
+        </label>
+        <div class="booking-instructions-float">           
+            <textarea class="specialRequests box-shadow"
+            name="specialRequests" ng-model="specialRequests" id="customerAdditionalInfo" cols="45" tabindex="9" rows="3"> </textarea>
+        </div>
+    </div>
+    <div class="horizontalStack" id="confirmStack">
+         <span class="submit"><button ng-disabled="bookingForm.$invalid" type="button" class="btn btn-default" value="Continue" tabindex="10" ng-click="SaveClientInfo()">Continue</button></span>
+    </div>
+    <div ng-show="bookingForm.$invalid" style="margin:1%">
+        <div ng-show="bookingForm.firstName.$error.pattern">Please enter only characters</div>
+        <div ng-show="bookingForm.phone.$error.pattern">Please enter valid phone number</div>
+    </div>
+</form>
+
+</div>               

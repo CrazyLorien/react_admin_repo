@@ -1,0 +1,39 @@
+<div class="panel panel-default" style="margin-top: 3%">	
+		<div class="panel-body">
+		<div class="row">
+		<table>
+		<col width="20%">
+  		<col width="80%">
+			<tr>
+				<td><span style="font-weight: bold; margin-left: 10px; margin-top: 12px">Masters</span></td>
+				<td><span style="font-weight: bold; margin-left: 10px; margin-top: 12px">Select a service</span></td>
+			</tr>
+			<tr>
+				<td valign="top">
+					<div>
+						<ul class="nav nav-pills nav-stacked" ng-repeat="master in model.masters">							
+							<li>
+								<div style="margin-left: 10px; margin-top: 12px">
+									<span ng-class="{true: 'masterLinkSelected', false: ''}[master.masterId === model.selectedMaster.id]"><a href="" ng-click="selectServices(master.masterId, master.name)">{{master.name}}</a></span>
+								</div>						
+							</li>		
+						</ul>
+				</div>
+				</td>
+				<td>
+				<div>
+				<ul class="nav nav-pills nav-stacked" ng-repeat="service in model.masterServices">
+					<li>
+						<div style="margin-left: 10px; margin-top: 12px">							
+							<a href="/schedule/{{service.link}}?contactId={{model.selectedMaster.id}}" ng-click="setMasterAndServices(service)">{{service.name}} ({{service.price}})</a>
+							<div style="font-size: 8pt">{{service.description}}</div>	
+						</div>						
+					</li>		
+				</ul>
+				</div>
+				</td>
+			</tr>
+		</table>		
+		</div>		
+	</div>
+</div>

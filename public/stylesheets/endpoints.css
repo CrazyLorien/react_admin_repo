@@ -1,0 +1,9 @@
+.vertical-center-row {
+    display: table-cell;
+    vertical-align: middle;
+}
+
+th {
+    border: 1px solid black;
+    text-align: center;
+}

@@ -1,0 +1,517 @@
+body {
+  padding: 50px;
+  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+}
+
+a {
+  color: #00B7FF;
+}
+
+.free {
+    background-color: green;
+    color: white;
+    border: none;
+    cursor: pointer;
+    padding: 2px 12px 3px 12px;
+    text-decoration: none;
+    border-left:1px solid #ddd;
+	border-right:1px solid #ddd;
+}
+.reserved {
+     background-color: yellow;
+     display: hidden!;
+}
+
+td.previose{
+	text-align: center;
+}
+
+td.next{
+	float:left;
+}
+
+.masterLinkSelected {
+    font-weight:bolder;
+    font-size:20px;
+}
+
+.selectedService {
+    font-size: 13px;
+    margin-left: 15px;
+    margin-top: 9px;
+    background-color: #EEE8AA;
+}
+
+.selectedMaster {    
+    font-weight: bold;
+}
+
+/*
+  Get client info css
+*/
+
+a:link,
+a:visited {
+    color: #333
+}
+form .verticalStack {
+    margin: 0 0 15px;
+    display: block
+}
+form .verticalStack button,
+form .verticalStack input,
+form .verticalStack label,
+form .verticalStack select,
+form .verticalStack textarea {
+    display: block
+}
+form .verticalStack label {
+    margin-bottom: 2px;
+    width: 140px;
+    float: left;
+    text-align: right;
+    font-weight: 700;
+    line-height: 20px
+}
+form .horizontalStack {
+    margin-top: 10px;
+    overflow: auto
+}
+form .horizontalStack_payment {
+    margin-top: 10px
+}
+form .horizontalStack .submit,
+form .horizontalStack input,
+form .horizontalStack label,
+form .horizontalStack select,
+form .horizontalStack textarea {
+    float: left
+}
+form .horizontalStack_payment .submit,
+form .horizontalStack_payment input,
+form .horizontalStack_payment label,
+form .horizontalStack_payment select,
+form .horizontalStack_payment textarea {
+    margin-right: 7px
+}
+form .horizontalStack_payment input {
+    position: relative;
+    bottom: 11px;
+    left: 2px
+}
+form .horizontalStack .submit {
+    float: left
+}
+form .verticalStack .horizontalStack {
+    margin-top: 0
+}
+form label .mandatory {
+    color: #f60;
+    font-size: 19pt;
+    position: relative;
+    top: 9px;
+    width: 30px;
+    left: 2px
+}
+form input[type=email],
+form input[type=password],
+form input[type=text],
+form textarea {
+    border: 1px solid #bdbdbd;
+    padding: 4px 3px;
+    margin-right:5pt;
+}
+form textarea {
+    resize: vertical;
+    font-family: Arial, sans-serif;
+    font-size: 10pt
+}
+form .fieldInstructions {
+    font-style: italic;
+    color: #666;
+    margin: 3px 0
+}
+
+.yourDetails
+{
+    padding:3%;
+}
+
+#bookingForm label
+{
+    margin-left:5pt;
+    margin-right:5pt;
+}
+
+.full button span {
+    background-color: limegreen;
+    border-radius: 32px;
+    color: black;
+  }
+  .partially button span {
+    background-color: orange;
+    border-radius: 32px;
+    color: black;
+  }
+
+/* Validation styles */
+.ng-pristine { border:1px solid Gold; }
+.ng-dirty.ng-valid { border:1px solid Green; }
+.ng-dirty.ng-invalid { border:1px solid Red; }
+.ng-dirty.ng-valid ~ span.ok { color:green; display:inline; }
+.ng-dirty.ng-invalid ~ span.ko { color:red; display:inline; }
+
+
+#bookingForm{
+    padding:3%;
+}
+
+span.submit button.disabled
+{
+    color: white;
+}
+
+
+.order{
+    max-width:200px;
+    min-width:200px;
+    float:left;
+    border:1px solid grey;
+    -moz-border-radius-bottomright: 50px;
+    border-bottom-right-radius: 20px;
+    border-bottom-left-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+    padding:5px;
+    background-image: -webkit-linear-gradient(left, rgb(44, 62, 80), rgb(52, 152, 219));
+    margin:10px;
+}
+
+
+/* = body
+------------------------*/
+body{
+  background:#1abc9c;
+}
+.description{
+  font-family: 'Vollkorn', serif;
+  text-align:center;
+  color:#ecf0f1;
+  text-shadow:0 0.1em 0.2em #008c8d;
+}
+/* = Scroll body
+------------------------*/
+::-webkit-scrollbar{
+  width:0.2em;
+}
+::-webkit-scrollbar-track{
+  background-color:#bdc3c7;
+}
+::-webkit-scrollbar-thumb{
+  background-color:#7f8c8d;
+}
+/* = table
+------------------------*/
+.box-table table{
+  border-collapse:collapse;
+  text-align:left;
+  width:100%;
+  margin:10px;
+  padding:0;
+  background:#7f8c8d;
+  animation: responsive 5s infinite ease-in-out;
+}
+.box-table{
+  font:normal 12px/150% Arial, Helvetica, sans-serif;
+  overflow:hidden;
+  margin:0 auto;
+  display:block;
+  width:95%;
+  padding:2.5%;
+}
+.box-table table thead th{
+  background-color:#7f8c8d;
+  color:#bdc3c7;
+  text-align:center;
+  padding: 0.75em;
+  font-family: 'Vollkorn', serif;
+  font-weight: bold;
+  font-size: 1.5em;
+  height: 1.5em;
+  vertical-align: top;
+  border-left:0.25em double #95a5a6;
+
+}
+.box-table table tbody td,
+.box-table table tbody tr{
+  font-family: 'Vollkorn', serif;
+  font-size:1em;
+  border:none;
+  padding:1em;
+  margin:5em;
+}
+.box-table table tbody tr:nth-child(odd){
+  background:#ecf0f1;
+  color:#95a5a6;
+}
+.box-table table tbody tr:nth-child(even){
+  background:#bdc3c7;
+  color:#7f8c8d;
+}
+.box-table table tbody tr a{
+  text-decoration:none;
+  color:#e67e22;
+}
+.box-table table tbody tr a:hover{
+  color:#d35400;
+}
+.box-table .user-photo{
+  background:#bdc3c7;
+}
+.box-table .user-tumb{
+  width:6em;
+  height:6em;
+  padding:0;
+  display:table-cell;
+  text-align:center;
+  margin:0 auto;
+  -webkit-border-radius:100%;
+  -moz-border-radius:100%;
+  border-radius:100%;
+}
+
+
+/* = Responsive table
+------------------------*/
+
+/* http://elvery.net/demo/responsive-tables/  */
+@media only screen and (max-width: 800px){
+  .box-table table{
+    width:100%;
+    border-collapse:collapse;
+    border-spacing:0;
+  }
+  .box-table th,
+  .box-table td{
+    margin:0;
+    vertical-align:top;
+  }
+  .box-table th{
+    text-align:left;
+  }
+  .box-table table{
+    display:block;
+    position:relative;
+    width:100%;
+  }
+  .box-table thead{
+    display:block;
+    float:left;
+  }
+  .box-table tbody{
+    display:block;
+    width:auto;
+    position:relative;
+    overflow-x:auto;
+    white-space:nowrap;
+  }
+  .box-table thead tr{
+    display:block;
+  }
+  .box-table th{
+    display:block;
+    text-align:right;
+  }
+  .box-table tbody tr{
+    display:inline-block;
+    vertical-align:top;
+  }
+  .box-table td{
+    display:block;
+    min-height:1.25em;
+    text-align:left;
+  }
+  .box-table th{
+    border-bottom:0;
+    border-left:0;
+  }
+  .box-table td{
+    border-left:0;
+    border-right:0;
+    border-bottom:0;
+  }
+}
+/* = Error
+------------------------*/
+.error_table {
+  display: block;
+  background: #E05E5E;
+  color: #D1D1D1;
+  font-family: 'Vollkorn', serif;
+  text-align: center;
+  font-size: 3em;
+  width: 90%;
+  padding: 5%;
+}
+/* = Loader
+------------------------*/
+.loading_table{
+  background:#d35400;
+  color:#ecf0f1;
+  font-family: 'Vollkorn', serif;
+  text-align: center;
+  font-size: 1em;
+  width: 0;
+  display: block;
+  overflow: hidden;
+  height: 1em;
+  padding:0.5em;
+  animation: table_loader 10s infinite ease;
+}
+@keyframes table_loader{50%{width:100%}}
+@-webkit-keyframes table_loader{50%{width:100%}}
+@-moz-keyframes table_loader{50%{width:100%}}
+@-ms-keyframes table_loader{50%{width:100%}}
+@-o-keyframes table_loader{ 50%{width:100%}}
+
+.editButton {
+	-moz-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	-webkit-box-shadow: 0px 1px 0px 0px #f0f7fa;
+	box-shadow: 0px 1px 0px 0px #f0f7fa;
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #33bdef), color-stop(1, #019ad2));
+	background:-moz-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-webkit-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-o-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:-ms-linear-gradient(top, #33bdef 5%, #019ad2 100%);
+	background:linear-gradient(to bottom, #33bdef 5%, #019ad2 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#33bdef', endColorstr='#019ad2',GradientType=0);
+	background-color:#33bdef;
+	-moz-border-radius:6px;
+	-webkit-border-radius:6px;
+	border-radius:6px;
+	border:1px solid #057fd0;
+	display:inline-block;
+	cursor:pointer;
+	color:#ffffff;
+	font-family:Arial;
+	font-size:15px;
+	font-weight:bold;
+	padding:6px 24px;
+	text-decoration:none;
+	text-shadow:0px -1px 0px #5b6178;
+}
+.editButton:hover {
+	background:-webkit-gradient(linear, left top, left bottom, color-stop(0.05, #019ad2), color-stop(1, #33bdef));
+	background:-moz-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-webkit-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-o-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:-ms-linear-gradient(top, #019ad2 5%, #33bdef 100%);
+	background:linear-gradient(to bottom, #019ad2 5%, #33bdef 100%);
+	filter:progid:DXImageTransform.Microsoft.gradient(startColorstr='#019ad2', endColorstr='#33bdef',GradientType=0);
+	background-color:#019ad2;
+}
+.editButton:active {
+	position:relative;
+	top:1px;
+}
+
+.photo-album{
+    margin-top:2%;
+    width:50%;
+}
+
+.photo-album div{
+    width:100%;
+}
+
+#jquery-loader-background{
+    height:100%;
+    width:94%;
+    position:absolute;
+    background-color: silver;
+    z-index:1000000;
+}
+#jquery-loader.blue-with-image{
+    height:100%;
+    width:100%;
+    border:2px #008587 solid;
+    padding-top:35px;
+    background-color: white;
+    text-align: center;
+    background-image: url(../images/balls.gif);
+    background-position: center center;
+    background-repeat: no-repeat;
+}
+
+#imgur{
+    display: block;
+    margin-top: 30px;
+}
+
+.positive-reviews
+{
+    width:50%;
+    min-height:100px;
+    background-color:orange;
+    float:left;
+}
+
+.negative-reviews{
+    width:50%;
+    min-height:100px;
+    background-color:red;
+    floatLleft;
+}
+
+.add-review input{
+    width:100%;
+}
+
+.add-review input[type=textarea]{
+    height:20%;
+}
+
+.pos{
+    width:50%;
+    float:left;
+}
+
+.pos button{
+    width:90%;
+    color:orange;
+}
+
+.neg{
+    width:50%;
+    float:left;
+}
+
+.neg button{
+    color:red;
+    width:90%;
+}
+
+.upload{
+   position: relative;
+   top: 20px;
+}
+
+.add-review{
+  margin-top:25px;
+}
+
+.btn.add-review{
+    margin-top:;
+}
+
+.add-review-positive{
+    background-color:green;  
+}
+
+.add-review-negative{
+    background-color:red;  
+}
+
+#imgur button{
+    margin-top: 20px;
+}

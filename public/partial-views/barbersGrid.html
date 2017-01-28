@@ -1,0 +1,56 @@
+<div ng-controller="barbersCtrl as bc">
+  <div  class='box-table'>
+    <table>
+      <thead>
+      </thead>
+      <tbody>
+	<tr>
+	  <th>Name</th>
+	  <th>Edit</th>
+	</tr>
+	<tr ng-repeat="barber in barbers track by $index">
+	  <td>
+	    {{barber.name}}
+	  <td>
+	    <button class='editButton' href='#inline-content' ng-click="edit(barber.masterId)">Edit</button>
+	    <button class='editButton' href='#inline-content' ng-click="deleteBarber(barber.masterId)">Delete</button>
+	</tr>
+      </tbody>
+    </table>
+    <div>
+      <div><button class='addButton' href='#new-barber' ng-click="addBarberPopup()">Add</button></div>
+    </div>
+  </div>
+  
+  <div style='display:none'>
+    <div id='inline-content' style="padding:10px; background:#fff;" >
+      <div ng-repeat='barber in barbers | filter: filterBarbersInPopup'>
+	<div>{{barber.name}}</div>
+      </div>
+      <div>
+	Services(pick services for this master)
+	<div ng-repeat='service in services track by $index'>
+	  <input type='checkbox' value='{{service.serviceId}}'  /><span>{{service.name}}</span>
+	</div>
+      </div>
+      <div><button ng-click="updateBarber()">Update</button></div>
+    </div>
+  </div>
+  
+  <div style='display:none'>
+    <div id='new-barber' >
+      <div>
+	<span>Write barber name</span> <input type='text' ng-model='name'>
+      </div>
+    <div>
+      Services(pick services for this master)
+      <div ng-repeat='service in services track by $index'>
+	<input type='checkbox' value='{{service.serviceId}}'  /><span>{{service.name}}</span>
+      </div>
+    </div>
+    <div><button ng-click="addNewBarber()">Add new barber</button></div>   
+  </div>
+</div>
+
+
+

@@ -1,0 +1,20 @@
+<div ng-controller="ordersCtrl">
+       <div class="order-container">
+		<p>Order Scroll</p>
+		<div class="order-body">
+		  		<div ng-repeat="order in orders" class="order">
+					<p>Master name : {{order.master}}</p>
+					<p>Service : {{order.service}}</p.>
+					<p>Client</p>
+					<p>Client Name : {{ order.client.firstName}}</p>
+					<p>Client LastName : {{order.client.lastName}}</p>
+					<p>Price : {{order.price}}</p>
+<p>Note : {{order.note}}</p>
+<p>Date : {{order.date.year}} {{order.date.month}} {{order.date.day}} </p> <!-- create function for translate in human date -->
+				<div  style="text-align:center"><button class="btn"  ng-click="deleteOrder(order._id)">Delete Order</button></div>
+          	</div>
+	      </div>
+</div>
+</div>
+
+

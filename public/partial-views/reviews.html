@@ -1,0 +1,42 @@
+<div ng-controller='reviewsCtrl as rws'>
+  <div class='positive-reviews' ng-repeat='item in rewiews'>
+    <div>
+      <p>{{item.title}}</p>
+      <p>{{item.text}}</p>
+      <p>{{item.name}}
+    </div>
+    <div>
+      <p> Share in social media<input type='checkbox'/></p>
+      <button>Upload image</button>
+    </div>
+  </div>
+  <div class='negative-reviews' ng-repeat='item in rewiews'>
+    <div>
+      <p>{{item.title}}</p>
+      <p>{{item.text}}</p>
+      <p>{{item.name}}
+    </div>
+  </div>
+  <div ng-class="(positive == true) ? ['add-review-positive'] : ['add-review-negative']" class='add-review'>
+    <p><input type='text' ng-model='title'></p>
+    <p><input type='textarea' ng-model='text'</p>
+    <div class='pos'><button class='btn' ng-click='addPlus(true)'>Positive</button></div><div class='neg'><button class='btn'  ng-click='addPlus(false)'>Negative</button></div>
+    <div loader showLoader="showLoader"></div>
+    <div class='upload'><input type="file" onchange="angular.element(this).scope().previewFile()" ng-model='file'><br></div>
+    <div id="imgur">
+       <div ng-hide="share">
+           <img src="" height="200" top-align="center"  alt="Image preview...">
+       </div>
+       <button  class="btn btn-default" >
+       <span class="glyphicon glyphicon-cloud-upload"></span>
+       <span class="glyphicon glyphicon-user"></span>
+          Upload image
+       </button>
+    </div>
+    <button class='btn add-review' ng-click="addReview()">Add review</button>
+  </div>
+
+
+
+
+  
