@@ -6,7 +6,7 @@ router.get('/', function(req, res, next) {
     var isAuth = req.isAuthenticated();
     debugger;
     console.log(req.user);
-    res.render('index', { title: 'Barbershop', isAuthenticated:isAuth, username: req.user != undefined ? req.user.name : "" });
+    res.render('index', { title: 'Barbershop'});
 });
 
 module.exports = router;
