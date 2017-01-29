@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "701b18ce22a30d751b4a"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "ded4c371abdf04110c6b"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -600,6 +600,8 @@
 
 	var _reactDom = __webpack_require__(159);
 
+	var _auth = __webpack_require__(160);
+
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -620,11 +622,11 @@
 	    _createClass(BarberComponent, [{
 	        key: 'render',
 	        value: function render() {
-
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Here we should start with auth component first!'
+	                'Here we should start with auth component first!',
+	                _react2.default.createElement(_auth.AuthenticateComponent, null)
 	            );
 	        }
 	    }]);
@@ -20375,6 +20377,98 @@
 	'use strict';
 
 	module.exports = __webpack_require__(4);
+
+/***/ },
+/* 160 */
+/***/ function(module, exports, __webpack_require__) {
+
+	"use strict";
+
+	Object.defineProperty(exports, "__esModule", {
+	    value: true
+	});
+	exports.AuthenticateComponent = undefined;
+
+	var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+
+	var _react = __webpack_require__(2);
+
+	var _react2 = _interopRequireDefault(_react);
+
+	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+
+	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
+
+	function _inherits(subClass, superClass) { if (typeof superClass !== "function" && superClass !== null) { throw new TypeError("Super expression must either be null or a function, not " + typeof superClass); } subClass.prototype = Object.create(superClass && superClass.prototype, { constructor: { value: subClass, enumerable: false, writable: true, configurable: true } }); if (superClass) Object.setPrototypeOf ? Object.setPrototypeOf(subClass, superClass) : subClass.__proto__ = superClass; }
+
+	var AuthenticateComponent = exports.AuthenticateComponent = function (_React$Component) {
+	    _inherits(AuthenticateComponent, _React$Component);
+
+	    function AuthenticateComponent() {
+	        _classCallCheck(this, AuthenticateComponent);
+
+	        return _possibleConstructorReturn(this, (AuthenticateComponent.__proto__ || Object.getPrototypeOf(AuthenticateComponent)).apply(this, arguments));
+	    }
+
+	    _createClass(AuthenticateComponent, [{
+	        key: "render",
+	        value: function render() {
+	            return _react2.default.createElement(
+	                "div",
+	                null,
+	                _react2.default.createElement(
+	                    "div",
+	                    { className: "row" },
+	                    _react2.default.createElement(
+	                        "form",
+	                        { className: "col s12" },
+	                        _react2.default.createElement(
+	                            "div",
+	                            { className: "row" },
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "input-field col s6" },
+	                                _react2.default.createElement("input", { id: "first_name", type: "text", className: "validate" }),
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "first_name" },
+	                                    "First Name"
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "input-field col s6" },
+	                                _react2.default.createElement("input", { id: "last_name", type: "text", className: "validate" }),
+	                                _react2.default.createElement(
+	                                    "label",
+	                                    { "for": "last_name" },
+	                                    "Last Name"
+	                                )
+	                            ),
+	                            _react2.default.createElement(
+	                                "div",
+	                                { className: "col s12" },
+	                                _react2.default.createElement(
+	                                    "button",
+	                                    { className: "btn waves-effect waves-light", type: "submit", name: "action" },
+	                                    _react2.default.createElement(
+	                                        "i",
+	                                        { className: "material-icons" },
+	                                        "Sign In"
+	                                    )
+	                                )
+	                            )
+	                        )
+	                    )
+	                )
+	            );
+	        }
+	    }]);
+
+	    return AuthenticateComponent;
+	}(_react2.default.Component);
 
 /***/ }
 /******/ ]);
