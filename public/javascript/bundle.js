@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "8d132a4306d60ca5843d"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "067092ec606435d3e1c0"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -20436,6 +20436,7 @@
 	        value: function handleSubmit(event) {
 	            console.log(event);
 	            event.preventDefault();
+	            //go to profile - on change route we check if user exist  
 	        }
 	    }, {
 	        key: 'render',

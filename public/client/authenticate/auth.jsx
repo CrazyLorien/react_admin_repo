@@ -17,7 +17,8 @@ export class AuthenticateComponent extends React.Component {
 
   handleSubmit(event){
     console.log(event)
-    event.preventDefault(); 
+    event.preventDefault();
+    //go to profile - on change route we check if user exist  
   }
 
   render() {

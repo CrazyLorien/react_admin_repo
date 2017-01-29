@@ -98,5 +98,26 @@ module.exports = function (app, passport,flash) {
 
 }
 
+/*
+app.post('/login', function(req, res, next) {
+    passport.authenticate('loginUsers', function(err, user, info) {
+        if (err) { return next(err); }
+        if (!user) { return res.render('account'); }
+        req.logIn(user, function(err) {
+            if (err) { return next(err); }
+            return res.json({detail: info});
+        });
+    })(req, res, next);
+});
+
+Also, in your strategy, make sure the fields name are correct ie:
+
+passport.use('loginUsers',new LocalStrategy({
+            usernameField : 'username',
+            passwordField : 'password',
+            passReqToCallback : true
+        },
+*/
+
 
 
