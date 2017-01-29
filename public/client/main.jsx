@@ -4,7 +4,8 @@ import { AuthenticateComponent } from '.\\authenticate\\auth'
 
 class BarberComponent extends React.Component {
     render() {
-        return (<div>Here we should start with auth component first!
+        return (<div>
+                    <div className="Title">Here we should start with auth component first!</div>
                     <AuthenticateComponent />
                     </div>);
     }

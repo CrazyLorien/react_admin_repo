@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "ded4c371abdf04110c6b"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "8d132a4306d60ca5843d"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -625,7 +625,11 @@
 	            return _react2.default.createElement(
 	                'div',
 	                null,
-	                'Here we should start with auth component first!',
+	                _react2.default.createElement(
+	                    'div',
+	                    { className: 'Title' },
+	                    'Here we should start with auth component first!'
+	                ),
 	                _react2.default.createElement(_auth.AuthenticateComponent, null)
 	            );
 	        }
@@ -20382,7 +20386,7 @@
 /* 160 */
 /***/ function(module, exports, __webpack_require__) {
 
-	"use strict";
+	'use strict';
 
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
@@ -20397,6 +20401,8 @@
 
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -20406,57 +20412,92 @@
 	var AuthenticateComponent = exports.AuthenticateComponent = function (_React$Component) {
 	    _inherits(AuthenticateComponent, _React$Component);
 
-	    function AuthenticateComponent() {
+	    function AuthenticateComponent(props) {
 	        _classCallCheck(this, AuthenticateComponent);
 
-	        return _possibleConstructorReturn(this, (AuthenticateComponent.__proto__ || Object.getPrototypeOf(AuthenticateComponent)).apply(this, arguments));
+	        var _this = _possibleConstructorReturn(this, (AuthenticateComponent.__proto__ || Object.getPrototypeOf(AuthenticateComponent)).call(this, props));
+
+	        _this.state = { value: '' };
+
+	        _this.handleChange = _this.handleChange.bind(_this);
+	        _this.handleSubmit = _this.handleSubmit.bind(_this);
+	        return _this;
 	    }
 
 	    _createClass(AuthenticateComponent, [{
-	        key: "render",
+	        key: 'handleChange',
+	        value: function handleChange(event) {
+	            var name = event.target.name;
+	            this.setState(_defineProperty({}, name, event.target.value));
+	            console.log(this.state);
+	        }
+	    }, {
+	        key: 'handleSubmit',
+	        value: function handleSubmit(event) {
+	            console.log(event);
+	            event.preventDefault();
+	        }
+	    }, {
+	        key: 'render',
 	        value: function render() {
 	            return _react2.default.createElement(
-	                "div",
-	                null,
+	                'div',
+	                { className: 'container' },
 	                _react2.default.createElement(
-	                    "div",
-	                    { className: "row" },
+	                    'div',
+	                    { className: 'row' },
 	                    _react2.default.createElement(
-	                        "form",
-	                        { className: "col s12" },
+	                        'form',
+	                        { className: 'col s12', onSubmit: this.handleSubmit },
 	                        _react2.default.createElement(
-	                            "div",
-	                            { className: "row" },
+	                            'div',
+	                            { className: 'row' },
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "input-field col s6" },
-	                                _react2.default.createElement("input", { id: "first_name", type: "text", className: "validate" }),
+	                                'div',
+	                                { className: 'input-field col s1' },
 	                                _react2.default.createElement(
-	                                    "label",
-	                                    { "for": "first_name" },
-	                                    "First Name"
+	                                    'label',
+	                                    { 'for': 'name' },
+	                                    'First Name'
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "input-field col s6" },
-	                                _react2.default.createElement("input", { id: "last_name", type: "text", className: "validate" }),
+	                                'div',
+	                                { className: 'input-field col s11' },
+	                                _react2.default.createElement('input', { id: 'Name', type: 'text', className: 'validate', name: 'name', onChange: this.handleChange, value: this.state.name })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'input-field col s1' },
 	                                _react2.default.createElement(
-	                                    "label",
-	                                    { "for": "last_name" },
-	                                    "Last Name"
+	                                    'label',
+	                                    { 'for': 'email' },
+	                                    'Email'
 	                                )
 	                            ),
 	                            _react2.default.createElement(
-	                                "div",
-	                                { className: "col s12" },
+	                                'div',
+	                                { className: 'input-field col s11' },
+	                                _react2.default.createElement('input', { id: 'email', type: 'text', className: 'validate', name: 'email', onChange: this.handleChange, value: this.state.email })
+	                            )
+	                        ),
+	                        _react2.default.createElement(
+	                            'div',
+	                            { className: 'row' },
+	                            _react2.default.createElement(
+	                                'div',
+	                                { className: 'col s12' },
 	                                _react2.default.createElement(
-	                                    "button",
-	                                    { className: "btn waves-effect waves-light", type: "submit", name: "action" },
+	                                    'button',
+	                                    { className: 'btn waves-effect waves-light', type: 'submit', name: 'action' },
 	                                    _react2.default.createElement(
-	                                        "i",
-	                                        { className: "material-icons" },
-	                                        "Sign In"
+	                                        'i',
+	                                        { className: 'material-icons' },
+	                                        'Sign In'
 	                                    )
 	                                )
 	                            )
