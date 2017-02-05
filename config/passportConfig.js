@@ -20,7 +20,7 @@ module.exports = function (app, passport,flash) {
     passport.use(
 	new LocalStrategy(
 	    function(username, password, done) {
-		user.findOne({ name: username }, function(err, user) {
+		User.findOne({ name: username }, function(err, user) {
 		    if (err) { return done(err, false);}
 		    if (!user) {
 			return done(null, false, { message: 'Incorrect username.' });
@@ -81,14 +81,26 @@ module.exports = function (app, passport,flash) {
 	    });
 
     app.get('/login', function (req,res,next) {
-	res.render('login', { message : req.flash('error')});
+		res.json({ message : req.flash('error')});
     });
 
-    app.post('/login',
-	     passport.authenticate('local', { successRedirect: '/admin',
-					      failureRedirect: '/login',
-					      failureFlash: true } )
-	    );
+   
+    app.post('/login', function(req, res, next) {
+		passport.authenticate('local', function(err, user, info) {
+			if (err) { 
+				return next(err);
+			 }
+			if (!user) {			
+				return next(err);
+		    }
+			req.logIn(user, function(err) {
+				if (err) { 
+					return next(err);
+				}
+				return res.json({detail: user});
+			});
+        })(req, res, next);
+    });
 
     app.get('/logout', function (req, res){
 	res.clearCookie('connect.sid');

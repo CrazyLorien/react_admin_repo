@@ -4,7 +4,6 @@ var router = express.Router();
 /* GET home page. */
 router.get('/', function(req, res, next) {
     var isAuth = req.isAuthenticated();
-    debugger;
     console.log(req.user);
     res.render('index', { title: 'Barbershop'});
 });

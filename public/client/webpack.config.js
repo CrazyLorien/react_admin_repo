@@ -34,6 +34,8 @@ module.exports = {
   devtool: NODE_ENV === 'development' ? "cheap-inline-module-source-map" : null
   //"cheap-inline-module-source-map" or "eval" in dev, "source-map" in prod
   */
+ devtool: '#inline-source-map',
+ debug: true,
   module: {
     loaders: [
       {

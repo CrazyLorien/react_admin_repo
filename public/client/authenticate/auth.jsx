@@ -1,6 +1,8 @@
 import  React  from 'react'
+import { Router, Route, Link, withRouter  } from 'react-router'
+import  AuthService   from '.\\auth-service'
 
-export class AuthenticateComponent extends React.Component {
+class AuthenticateComponent extends React.Component {
  constructor(props) {
     super(props);
     this.state = {value: ''};
@@ -12,13 +14,15 @@ export class AuthenticateComponent extends React.Component {
   handleChange(event) {
     const name = event.target.name;
     this.setState({ [name]: event.target.value});
-    console.log(this.state)
+
   }
 
   handleSubmit(event){
     console.log(event)
     event.preventDefault();
-    //go to profile - on change route we check if user exist  
+    //go to profile - on change route we check if user exist
+    var auth = new AuthService(this.props.router);
+    auth.login(this.state.name, this.state.email, 'protectedprofile');
   }
 
   render() {
@@ -43,10 +47,8 @@ export class AuthenticateComponent extends React.Component {
                                     </div> 
                                  </div>
                                 <div className="row">                           
-                                  <div className="col s12">
-                                       <button className="btn waves-effect waves-light" type="submit" name="action" >
-                                            <i className="material-icons">Sign In</i>
-                                        </button>
+                                  <div className="col s12">                                   
+                                       <button>Sign In</button>
                                    </div>
                                 </div>
                               </form>                         
@@ -54,3 +56,5 @@ export class AuthenticateComponent extends React.Component {
                     </div>
     }
 }
+
+export default withRouter(AuthenticateComponent)
