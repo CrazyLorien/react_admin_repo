@@ -91,7 +91,7 @@ module.exports = function (app, passport,flash) {
 				return next(err);
 			 }
 			if (!user) {			
-				return next(err);
+				return next(new Error("Can't find user"));
 		    }
 			req.logIn(user, function(err) {
 				if (err) { 

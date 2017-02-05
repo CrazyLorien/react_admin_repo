@@ -1,14 +1,16 @@
 import  React  from 'react'
 import { Router, Route, Link, withRouter  } from 'react-router'
 import  AuthService   from '.\\auth-service'
+import ErrorComponent from '..\\errors\\error'
 
 class AuthenticateComponent extends React.Component {
  constructor(props) {
     super(props);
-    this.state = {value: ''};
+    this.state = {value: '',isAuth:''};
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
+    this.auth = this.auth || {}
   }
 
   handleChange(event) {
@@ -21,8 +23,12 @@ class AuthenticateComponent extends React.Component {
     console.log(event)
     event.preventDefault();
     //go to profile - on change route we check if user exist
-    var auth = new AuthService(this.props.router);
-    auth.login(this.state.name, this.state.email, 'protectedprofile');
+    this.auth = new AuthService(this.props.router);
+    // for now we should stop work on it - that should be write with flux architecture that should update state of our componentDidUpdate(prevProps, prevState) {
+    // and re-render it on change state;
+       
+    this.auth.login(this.state.name, this.state.email, 'protectedprofile');
+    
   }
 
   render() {
@@ -53,6 +59,7 @@ class AuthenticateComponent extends React.Component {
                                 </div>
                               </form>                         
                         </div>
+                        <ErrorComponent message={this.auth} />
                     </div>
     }
 }

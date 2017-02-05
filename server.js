@@ -98,24 +98,26 @@ app.get('/endpoints', function(req, res){
     res.render('endpoints', { routes: routes });  
 });
 
-app.all('/*', function(req, res, next) {    
+// catch 404 and forward to error handler
+app.use(function(req, res, next) {
+    if(req.user) {        
+        res.cookie('user', JSON.stringify({'id': req.user.id}), { httpOnly: false } );
+    } else {
+        res.clearCookie("user");
+    }
+});
+
+/*app.all('/*', function(req, res, next) {    
     if(req.user) {        
         res.cookie('user', JSON.stringify({'id': req.user.id}), { httpOnly: false } );
     } else {
         res.clearCookie("user");
     }
 
-    res.redirect('/start');
-});
+    next();
+}); */
 
 app.use(express.static(__dirname + '/public'));
-
-// catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    var err = new Error('Not Found');
-    err.status = 404;
-    next(err);
-});
 
 // development error handler
 // will print stacktrace
