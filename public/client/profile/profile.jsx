@@ -4,7 +4,8 @@ class Profile extends Component {
     render() {
         return (
             <div>
-               Protected profile! 
+               Protected profile!
+               {this.props.users.name}
             </div>
         );
     }
