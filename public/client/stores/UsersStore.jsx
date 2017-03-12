@@ -12,29 +12,31 @@ class UsersStore extends AbstractStore{
         super();
     }
 
-    loadUsers(){
-       this.getData();
+    loadUsersInStore(data){
+       this.setData(data);
+    }
+
+    getDataFromStore(){
+       return this.getData("users");
     }
 }
 
 // Зарегистрировать обработчик в Диспетчере
 AppDispatcher.register(function(payload) {
-  var action = payload.action;
-  var text;
+  var action = payload.type;
+  var users = payload.data;
   // Обработать Действие в зависимости от его типа
-  switch(action.actionType) {
-    case constants.GET_USERS:
-      // Вызвать внутренний метод на основании полученного Действия
-      //loadUsers(action.data); // for now we get data cinstantly we have to use this one when start get data from server
+  switch(action) {
+    case constanst.LOAD_ALL_USERS:
+      this.setData(users);
       break;
 
     default:
-      return true;
-  }
-  
-  // Если Действие было обработано, создать событие "change"
-  UsersStore.emitChange();
+     // Если Действие было обработано, создать событие "change"
+    UsersStore.emitChange();
 
+  }
+   
   return true;
 
 });

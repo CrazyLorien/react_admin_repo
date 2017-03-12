@@ -7,11 +7,11 @@ export default (storeNames, getStatesFromStores) => {
     return (Component) =>  class ConnectToSore extends ReactComponent{
         constructor(props){
             super(props);
-            this.store = getStatesFromStores(stores, this.props)
+            this.state = getStatesFromStores(stores, props)
         }
 
         componentWillReceiveProps(props){
-            this.setState(getStatesFromStores(stores, this.props))
+            this.setState(getStatesFromStores(stores, props))
         }
 
         componentDidMount = () => {

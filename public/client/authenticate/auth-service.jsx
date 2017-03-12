@@ -7,23 +7,17 @@ export default class AuthService{
    
    login(name, email, path){
        var self = this;
-       $.post('/login', { username : name, password: email }).then( (data) => {
-           if(data.detail){
-                dataStorage.isAuth = true;
-                debugger;
-                this.router.push({
-                    pathname:path
-                });
-           }else if(data.error){
-               dataStorage.error = data.message;
-           }
-               
-       })       
+       return $.post('/login', { username : name, password: email }); 
    }
 
    static isAuth(){
        return dataStorage.isAuth;
    }
+
+   static setIsAuth(data){
+        dataStorage.isAuth = data;     
+   }
+
 
    errors(){
        return dataStorage.error;

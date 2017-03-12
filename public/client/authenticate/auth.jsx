@@ -10,7 +10,7 @@ class AuthenticateComponent extends React.Component {
 
     this.handleChange = this.handleChange.bind(this);
     this.handleSubmit = this.handleSubmit.bind(this);
-    this.auth = this.auth || {}
+    this.auth = this.auth || new AuthService(this.props.router);
   }
 
   handleChange(event) {
@@ -22,13 +22,21 @@ class AuthenticateComponent extends React.Component {
   handleSubmit(event){
     console.log(event)
     event.preventDefault();
-    //go to profile - on change route we check if user exist
-    this.auth = new AuthService(this.props.router);
     // for now we should stop work on it - that should be write with flux architecture that should update state of our componentDidUpdate(prevProps, prevState) {
-    // and re-render it on change state;
-       
-    this.auth.login(this.state.name, this.state.email, 'protectedprofile');
-    
+    // and re-render it on change state;     
+    let authRequest = this.auth.login(this.state.name, this.state.email); 
+    authRequest.then( (data) => {
+           if(data.detail){
+                AuthService.setIsAuth(true);
+                debugger;
+                this.auth.router.push({
+                    pathname:'protectedprofile'
+                });
+           }else if(data.error){
+               this.setState({ message : data.message});
+           }
+               
+       })      
   }
 
   render() {
@@ -59,7 +67,7 @@ class AuthenticateComponent extends React.Component {
                                 </div>
                               </form>                         
                         </div>
-                        <ErrorComponent message={this.auth} />
+                        <ErrorComponent message={this.state.message} />
                     </div>
     }
 }

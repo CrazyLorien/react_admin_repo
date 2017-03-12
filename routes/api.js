@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var service = require('../models/service.js');
 var barber = require('../models/barber.js');
+var user = require('../models/user')
 var ObjectId = require('mongoose').Types.ObjectId;
 
 router.get('/services', function(req, res, next) {  
@@ -90,6 +91,19 @@ router.delete('/barbers/:id', function(req, res, next) {
 
       res.sendStatus(200);
     });
+});
+
+
+router.get('/users', function(req, res, next) {  
+  var query = user.find();
+    
+  query.exec(function(err, users) {
+    if (err) {      
+      return next(err);
+    }
+    
+    res.json(users);
+  });  
 });
 
 module.exports = router;

@@ -4,16 +4,30 @@ var AppDispatcher = require('../dispatcher/AppDispatcher');
 var EventEmitter = require('events').EventEmitter;
 
 // Внутренний объект для хранения shoes
-let _data = { "users" : [{ name : "azaza", password: "aseasd123"}]}; 
+let _data = [];
 class AbstractStore extends EventEmitter{
    constructor() {
         super();
     }
 
-  // Вернуть все shoes
-  getData() {
-    console.log(`data --- ${_data["users"][0]}`)
-    return _data["users"][0];
+  getData(storeName) {
+    return _data[storeName];
+  }
+
+  setData(storeName, data){
+    if(!_data[storeName])
+      _data[storeName] = [];
+
+    data.forEach( (item) => _data[storeName].push(item));
+  }
+
+
+  getDataByID(){
+
+  }
+
+  deleteDataByID(){
+    
   }
 
   emitChange() {
