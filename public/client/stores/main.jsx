@@ -1,5 +1,3 @@
-import UsersStore from ".//UsersStore"
-
-export default {
-    users : new UsersStore()
-}
+import { createStore } from 'redux';
+import main  from '..\\reducers\\main';
+export default createStore(main);

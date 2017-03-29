@@ -1,15 +1,24 @@
 import React, {Component} from 'react';
-import Profile from "..//profile//profile"
-import ConnectToStores from "..//decorators//connectToStores"
-import UserActions from "..//actions//users"
+import Profile from "..//profile//profile";
+import { connect, dispatch } from 'react-redux';
+import  usersAction  from '..//action_new_wrote_for_redux//users';
+import  userReducer from '..//reducers//main'
+
+
 
 class AppContainer extends Component {
     //ends with errors here 0 try provide users from props and state it doesn made any result for me.
+    componentDidMount(){
+        if(this.props.users.length <= 0 || this.props.users === undefined){
+            //here we should set data in store from db;
+            this.props.getAll();
+        }
+    }
 
     componentWillReceiveProps(props){
-        if(props.users.length <= 0){
+        if(props.users.length <= 0 || props.users === undefined){
             //here we should set data in store from db;
-            UserActions.loadUsers();
+            this.props.getAll();
         }
     }
 
@@ -20,10 +29,16 @@ class AppContainer extends Component {
     }
 }
 
-function getState(stores){
-    return {
-        users: stores.users.getDataFromStore()
-    }
-}
 
-export default ConnectToStores(["users"], getState)(AppContainer);
+
+export default connect((state) => {
+    return {
+        users : state.users
+    }
+}, function (dispatch) {
+    return {
+        getAll: () => {
+            dispatch(usersAction.RECEIVE_ALL())
+        }
+    }
+})(AppContainer)
