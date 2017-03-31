@@ -1,7 +1,7 @@
-import  React  from 'react'
-import { Router, Route, Link, withRouter  } from 'react-router'
-import  AuthService   from '.\\auth-service'
-import ErrorComponent from '..\\errors\\error'
+import  React  from 'react';
+import { Router, Route, Link, withRouter  } from 'react-router';
+import  AuthService   from './auth-service';
+import ErrorComponent from '../errors/error';
 
 class AuthenticateComponent extends React.Component {
  constructor(props) {
@@ -20,7 +20,6 @@ class AuthenticateComponent extends React.Component {
   }
 
   handleSubmit(event){
-    console.log(event)
     event.preventDefault();
     // for now we should stop work on it - that should be write with flux architecture that should update state of our componentDidUpdate(prevProps, prevState) {
     // and re-render it on change state;     
@@ -28,7 +27,7 @@ class AuthenticateComponent extends React.Component {
     authRequest.then( (data) => {
            if(data.detail){
                 AuthService.setIsAuth(true);
-                debugger;
+                AuthService.setDetails(this.state.name, this.state.email)
                 this.auth.router.push({
                     pathname:'protectedprofile'
                 });
@@ -45,7 +44,7 @@ class AuthenticateComponent extends React.Component {
                             <form className="col s12"  onSubmit={this.handleSubmit}>
                                 <div className="row">
                                     <div className="input-field col s1">
-                                        <label for="name">First Name</label>                                                                   
+                                        <label for="name">Login</label>                                                                   
                                     </div>
 
                                     <div className="input-field col s11">
@@ -54,17 +53,16 @@ class AuthenticateComponent extends React.Component {
                                 </div>
                                 <div className="row">
                                     <div className="input-field col s1">
-                                        <label for="email">Email</label>                                                                      
+                                        <label for="email">Password</label>                                                                      
                                     </div>  
                                     <div className="input-field col s11">                                    
                                         <input id="email" type="text" className="validate" name="email" onChange={this.handleChange} value={this.state.email}/>                                    
                                     </div> 
                                  </div>
-                                <div className="row">                           
-                                  <div className="col s12">                                   
-                                       <button>Sign In</button>
+                       
+                                  <div className="s12">                                   
+                                       <button class="btn waves-effect">Sign In</button>
                                    </div>
-                                </div>
                               </form>                         
                         </div>
                         <ErrorComponent message={this.state.message} />

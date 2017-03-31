@@ -15,7 +15,7 @@ class ErrorComponent extends Component {
             <div>
                 {this.state.message}
             </div>
-        ) : <div>No errors</div>;
+        ) : <div></div>;
     }
 }
 

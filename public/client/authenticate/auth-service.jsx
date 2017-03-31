@@ -1,4 +1,4 @@
-let dataStorage = { isAuth : false, error: ''}
+let dataStorage = { isAuth : false, error: '', authUser: {}}
 
 export default class AuthService{
    constructor(router) {
@@ -21,6 +21,16 @@ export default class AuthService{
 
    errors(){
        return dataStorage.error;
+   }
+
+   static setDetails(name, password){
+       dataStorage.authUser.name = name;
+       dataStorage.authUser.password = password;
+
+   }
+
+   static getAuthUser(){
+       return dataStorage.authUser;
    }
 
 }

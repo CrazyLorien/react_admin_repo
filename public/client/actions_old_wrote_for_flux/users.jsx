@@ -7,7 +7,7 @@ let UserActions = {
             .then(function(response) {
                  AppDispatcher.dispatch({
                     type: ACTION_NAMES.LOAD_ALL_USERS,
-                    data : response,
+                    data : response
                 })
             })
        

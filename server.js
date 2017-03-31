@@ -23,16 +23,16 @@ var mongoose = require('mongoose');
 var dbUrl = config.get('db:connection') + '/' + config.get('db:name');
 var db = mongoose.connection;
 
-mongoose.connect(dbUrl, function(err) {
-    if(err) {
+mongoose.connect(dbUrl, function (err) {
+    if (err) {
         log.debug('Connection error'.red, err);
-    } else {        
+    } else {
         log.info('Connection with barber db was successful..'.yellow);
 
-        app.listen(app.get('port'), function() {  
+        app.listen(app.get('port'), function () {
             log.info('Starting up Express http-server, listening on port '.yellow + (app.get('port')).toString().underline.cyan + '..');
             log.info('Hit CTRL-C to stop the server'.grey);
-	});
+        });
     }
 });
 
@@ -55,19 +55,19 @@ app.use(session({ secret: 'keyboard cat' }));
 
 var passport = require('passport');
 var passp = require('./config/passportConfig')
-passp(app,passport,flash)
+passp(app, passport, flash)
 
 
-var mustAuthenticatedMw = function (req, res, next){
-    req.isAuthenticated()
-	? next()
-	: res.redirect('/login');
+var mustAuthenticatedMw = function (req, res, next) {
+    req.isAuthenticated() ?
+        next() :
+        res.redirect('/login');
 };
 
 app.get('/admin', function (req, res, next) {
-    req.isAuthenticated()
-	? res.redirect('/barbersgrid')
-	: res.redirect('/login');
+    req.isAuthenticated() ?
+        res.redirect('/barbersgrid') :
+        res.redirect('/login');
 });
 
 // view engine setup
@@ -81,27 +81,27 @@ app.use('/confirm', confirm);
 app.use('/sendEmail', mail);
 app.use('/reviews', mustAuthenticatedMw, review);
 
-app.get('/endpoints', function(req, res){
+app.get('/endpoints', function (req, res) {
     var route, routes = [];
 
-    app._router.stack.forEach(function(middleware){  
-	if(middleware.route){ // routes registered directly on the app
+    app._router.stack.forEach(function (middleware) {
+        if (middleware.route) { // routes registered directly on the app
             routes.push(middleware.route);
-	} else if(middleware.name === 'router'){ // router middleware       
-            middleware.handle.stack.forEach(function(handler){          
-		route = handler.route;
-		route && routes.push(route);
+        } else if (middleware.name === 'router') { // router middleware       
+            middleware.handle.stack.forEach(function (handler) {
+                route = handler.route;
+                route && routes.push(route);
             });
-	}
+        }
     });
 
-    res.render('endpoints', { routes: routes });  
+    res.render('endpoints', { routes: routes });
 });
 
 // catch 404 and forward to error handler
-app.use(function(req, res, next) {
-    if(req.user) {        
-        res.cookie('user', JSON.stringify({'id': req.user.id}), { httpOnly: false } );
+app.use(function (req, res, next) {
+    if (req.user) {
+        res.cookie('user', JSON.stringify({ 'id': req.user.id }), { httpOnly: false });
     } else {
         res.clearCookie("user");
     }
@@ -122,30 +122,23 @@ app.use(express.static(__dirname + '/public'));
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
-    app.use(function(err, req, res, next) {
-	res.status(err.status || 500);
-	   res.json('error', {
-	    message: err.message,
-	    error: err
-	});
+    app.use(function (err, req, res, next) {
+        res.status(err.status || 500);
+        res.json('error', {
+            message: err.message,
+            error: err
+        });
     });
 }
 
 // production error handler
 // no stacktraces leaked to user
-app.use(function(err, req, res, next) {
-    res.status(err.status || 500);
-    res.json('error', {
+app.use(function (err, req, res, next) {
+    res.status(err.status || 500).
+    json('error', {
         message: err.message,
         error: {}
     });
 });
 
 module.exports = app;
-
-
-
-
-
-
-
