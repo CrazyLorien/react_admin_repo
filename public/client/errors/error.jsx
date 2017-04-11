@@ -7,7 +7,8 @@ class ErrorComponent extends Component {
     }
 
     componentWillReceiveProps(props){
-        this.setState({ message : props.message})
+        this.setState({ message : props.message}); 
+                                                  
     }
     
     render() {

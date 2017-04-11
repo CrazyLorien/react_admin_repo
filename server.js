@@ -9,14 +9,8 @@ var morgan = require('morgan');
 var colors = require('colors');
 var routes = require('./routes/index');
 var api = require('./routes/api');
-var orders = require('./routes/orders');
-var approve = require('./routes/approve');
-var confirm = require('./routes/confirm');
-var review = require('./routes/review');
 
 
-var user = require('./models/user.js');
-var mail = require('./routes/mailer.js');
 var flash = require('connect-flash');
 
 var mongoose = require('mongoose');
@@ -54,7 +48,7 @@ app.use(bodyParser());
 app.use(session({ secret: 'keyboard cat' }));
 
 var passport = require('passport');
-var passp = require('./config/passportConfig')
+var passp = require('./config/passportConfig');
 passp(app, passport, flash)
 
 
@@ -75,11 +69,7 @@ app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
 app.use('/start', routes);
 app.use('/api', api);
-app.use('/orders', mustAuthenticatedMw, orders);
-app.use('/approve', approve);
-app.use('/confirm', confirm);
-app.use('/sendEmail', mail);
-app.use('/reviews', mustAuthenticatedMw, review);
+
 
 app.get('/endpoints', function (req, res) {
     var route, routes = [];
@@ -125,7 +115,7 @@ if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
         res.status(err.status || 500);
         res.json('error', {
-            message: err.message,
+            message: err.message || err.info,
             error: err
         });
     });
@@ -136,7 +126,7 @@ if (app.get('env') === 'development') {
 app.use(function (err, req, res, next) {
     res.status(err.status || 500).
     json('error', {
-        message: err.message,
+        message: err.message || err.info,
         error: {}
     });
 });

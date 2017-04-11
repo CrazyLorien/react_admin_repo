@@ -5,9 +5,9 @@ export default class AuthService{
        this.router = router;     
    }
    
-   login(name, email, path){
+   login(name, password, path){
        var self = this;
-       return $.post('/login', { username : name, password: email }); 
+       return $.post('/login', { username : name, password: password }); 
    }
 
    static isAuth(){
@@ -26,7 +26,6 @@ export default class AuthService{
    static setDetails(name, password){
        dataStorage.authUser.name = name;
        dataStorage.authUser.password = password;
-
    }
 
    static getAuthUser(){

@@ -31,17 +31,29 @@ export default {
             );
         };
     },
-    'UPDATE_USER': function (name) {
+    'GET_BY_ID': function (id) {
         return (dispatch) => {
-            $.post(usersUrl + '/' + name).then(
-                (resp) => {
+            dispatch({
+                type: 'GET_BY_ID',
+                data: id
+            })
+        };
+    },
+    'UPDATE_USER': function (user) {
+        return (dispatch) => {
+
+            $.ajax({
+                url: `${usersUrl}/${user.id}/update`,
+                type: 'PUT',
+                success: (resp) => {
                     dispatch({
                         type: 'UPDATE_USER',
                         data: resp
                     })
-
-                }
-            );
-        };
+                },
+                data: JSON.stringify(user),
+                contentType: 'application/json;charset=utf-8'
+            });
+        }
     }
 };

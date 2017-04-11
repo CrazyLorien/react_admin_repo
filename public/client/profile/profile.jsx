@@ -1,6 +1,7 @@
 import React, {Component} from 'react';
 import ErrorComponent from '../errors/error';
-import usersAction  from '../action_new_wrote_for_redux/users';
+import usersAction  from '../action/users';
+import { Router, Route, Link, browserHistory } from 'react-router';
 
 class Profile extends Component {
     constructor(){
@@ -14,17 +15,31 @@ class Profile extends Component {
         
     }
 
+    //lifecycle hooks
+    componentDidMount(){
+        if(this.props.user !== undefined && this.props.user.name !== undefined)     
+            this.setState({
+                message : "",
+                avatar: this.props.user.Images[0] || 'images/default.jpg',
+                name : this.props.user.name,
+                password : this.props.user.password,
+                Roles: this.props.user.Roles
+            });
+    }
+
     componentWillReceiveProps(props){
         if(props.user.name !== undefined)     
             this.setState({
                 message : "",
                 avatar: props.user.Images[0] || 'images/default.jpg',
                 name : props.user.name,
-                password : props.user.password
+                password : props.user.password,
+                Roles: props.user.Roles
             });
     }
 
-    handleChange(event) {
+    // event handlers
+     handleChange(event) {
         const name = event.target.name;
         this.setState({ [name]: event.target.value});
 
@@ -33,16 +48,27 @@ class Profile extends Component {
     handleSubmit(event) {
         event.preventDefault();
         let user = {
+            id: this.props.user._id,
             name: this.state.name,
             password: this.state.password,
-            Images: [this.state.avatar]
+            Images: [this.state.avatar],
+            Roles: this.state.Roles
         }
-        usersAction.updateUser(user);
+        this.props.updateUser(user);
     }
+
+    selectRole(role){      
+        this.setState( { Roles : this.state.Roles.push(role) })
+    }
+
+   
     render() {
+        let isAdmin = this.state.Roles ? this.state.Roles.filter( (role) => role.Permissions.indexOf('Update') > -1).length > 0 : false;
+        let isCurrentUser = this.props.isCurrentUser;
         return (<div className="container">
+            Admin
             <div className="row" >
-                <form className="col s12"  >
+                <form className="col s12" onSubmit={this.handleSubmit} >
                     <div className="row">
                         <div className="input-field col s1">
                             <label for="name">First Name</label>
@@ -50,7 +76,8 @@ class Profile extends Component {
 
                         <div className="input-field col s11">
                             <input id="Name" type="text" className="validate" name="name" value={this.state.name} onChange={this.handleChange}/>
-                        </div>
+                        </div>                      
+                        
                     </div>
                     <div className="row">
                         <div className="input-field col s1">
@@ -73,11 +100,21 @@ class Profile extends Component {
                     </div>
 
                     <div className="s12">
-                        <button class="btn waves-effect" onSubmit={this.handleSubmit}>Save</button>
+                        <button class="btn waves-effect" >Save</button>
                     </div>
                 </form>
             </div>
+            {isAdmin? (
+                <div className="input-field col s12">
+                    <Link to="/adminprofile/listofusers" activeStyle={{ color: 'red' }}>List of users</Link>
+                </div>
+            ) : (
+                    <div></div>
+                )}
+       
             <ErrorComponent message={this.state.message} />
+
+            <div>{this.props.children}</div>
         </div>)
     }
 }

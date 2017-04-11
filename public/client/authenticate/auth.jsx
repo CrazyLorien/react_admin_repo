@@ -20,26 +20,24 @@ class AuthenticateComponent extends React.Component {
   }
 
   handleSubmit(event){
-    event.preventDefault();
-    // for now we should stop work on it - that should be write with flux architecture that should update state of our componentDidUpdate(prevProps, prevState) {
-    // and re-render it on change state;     
+    event.preventDefault();   
     let authRequest = this.auth.login(this.state.name, this.state.email); 
     authRequest.then( (data) => {
            if(data.detail){
                 AuthService.setIsAuth(true);
-                AuthService.setDetails(this.state.name, this.state.email)
+                AuthService.setDetails(this.state.name, this.state.email);
                 this.auth.router.push({
-                    pathname:'protectedprofile'
+                    pathname:'adminprofile'
                 });
-           }else if(data.error){
-               this.setState({ message : data.message});
-           }
-               
-       })      
+           }             
+       }, (data) => {
+            this.setState(data.responseJSON);
+       }); 
   }
 
   render() {
         return <div className="container">
+                    <p className="admin-area-title">Barber Admin Area.</p>
                      <div className="row" >            
                             <form className="col s12"  onSubmit={this.handleSubmit}>
                                 <div className="row">

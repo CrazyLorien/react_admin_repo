@@ -2,10 +2,9 @@ var express = require('express');
 var router = express.Router();
 
 /* GET home page. */
-router.get('/', function(req, res, next) {
+router.get('/', function (req, res, next) {
     var isAuth = req.isAuthenticated();
-    console.log(req.user);
-    res.render('index', { title: 'Barbershop'});
+    res.render('index', { title: 'Admin part of site' });
 });
 
 module.exports = router;

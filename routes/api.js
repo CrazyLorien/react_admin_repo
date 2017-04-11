@@ -1,98 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var service = require('../models/service.js');
-var barber = require('../models/barber.js');
 var User = require('../models/user')
 var ObjectId = require('mongoose').Types.ObjectId;
 
-router.get('/services', function (req, res, next) {
-    if (req.query.masterId) {
-        var query = { _id: new ObjectId(req.query.masterId) };
-        barber.findOne(query, function (e, master) {
-            if (master === null)
-                return;
-
-            if (e || master.length === 0) {
-                console.log(e);
-            }
-
-            var idList = master.services.map(function (id) { return id.toString(); });
-
-            service.find({ serviceId: { $in: idList } }, function (e, docs) {
-                res.json(docs);
-            });
-        });
-    } else {
-        service.find({}, function (e, docs) {
-            res.json(docs);
-        });
-    }
-});
-
-router.post('/services', function (req, res, next) {
-    service.create(req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
-});
-
-router.put('/services/:id', function (req, res, next) {
-    service.findByIdAndUpdate(req.params.id, req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
-});
-
-router.delete('/services/:id', function (req, res, next) {
-    service.findByIdAndRemove(req.params.id, req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
-});
-
-router.get('/barbers', function (req, res, next) {
-    var query = barber.find();
-
-    if (req.query.masterId) {
-        query.where({ masterId: req.query.masterId });
-    }
-
-    query.exec(function (err, masters) {
-        if (err) {
-            return next(err);
-        }
-
-        res.json(masters);
-    });
-});
-
-router.post('/barbers', function (req, res, next) {
-    barber.create(req.body, function (err, post) {
-        if (err) return next(err);
-        res.json(post);
-    });
-});
-
-router.put('/barbers/:id', function (req, res, next) {
-    barber.findOneAndUpdate({ masterId: req.params.id }, req.body, function (err, post) {
-        if (err) {
-            return next(err);
-        }
-        res.json(post);
-    });
-});
-
-router.delete('/barbers/:id', function (req, res, next) {
-    var query = barber.find({ masterId: req.query.id });
-    query.remove().exec(function (err) {
-        if (err) {
-            return next(err)
-        };
-
-        res.sendStatus(200);
-    });
-});
-
+//users
 
 router.get('/users', function (req, res, next) {
     var query = User.find({});
@@ -115,5 +26,73 @@ router.get('/users/:name', function (req, res, next) {
         res.json(user);
     })
 });
+
+router.post('/users/:id', function (req, res, next) {
+    var user = new User(req.body);
+    user.save(function (err) {
+        if (err) return next(err);
+        res.json(user);
+    });
+});
+
+
+router.put('/users/:id/update', function (req, res, next) {
+    console.log(req)
+    User.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, post) {
+        if (err) return next(err);
+        res.json(post);
+    });
+});
+
+
+//roles
+router.get('/roles', function (req, res, next) {
+    var query = Role.find({});
+
+    query.exec(function (err, roles) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(users);
+    });
+});
+
+router.post('/roles/:id', function (req, res, next) {
+    var query = Role.find({});
+
+    Role.save(req.body, function (err, post) {
+        if (err) return next(err);
+        res.json(post);
+    });
+
+    res.json(users);
+});
+
+
+router.put('/roles/:id/update', function (req, res, next) {
+    var query = Role.find({});
+
+    Role.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, role) {
+        if (err) return next(err);
+        res.json(role);
+    });
+});
+
+router.delete('/roles/:name/delete', function (req, res, next) {
+    var query = Role.find({});
+
+    query.exec(function (err, roles) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(roles);
+    });
+});
+
+
+
+//permissions
 
 module.exports = router;
