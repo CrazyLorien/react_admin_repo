@@ -1,25 +1,25 @@
 import React, {Component} from 'react';
 import ProfileList from "../profile/profilelist";
 import { connect, dispatch } from 'react-redux';
-import  usersAction  from '../action/users';
+import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';
 
 class UsersContainer extends Component {
     componentDidMount(){
-        if(this.props.users.usersList.length <= 1){
+        if(this.props.users.length <= 1){
             this.props.getAll();
         }
     }
 
     componentWillReceiveProps(props){
-        if(props.users.usersList.length <= 1 ){
+        if(props.users.length <= 1 ){
             this.props.getAll();
         }
     }
 
     render() {
         return (
-            <ProfileList users={this.props.users.usersList}  />
+            <ProfileList users={this.props.users}  />
         );
     }
 }
@@ -28,7 +28,7 @@ class UsersContainer extends Component {
 
 export default connect((state) => {
     return {
-        users : state.users
+        users : state.users.usersList
     }
 }, function (dispatch) {
     return {

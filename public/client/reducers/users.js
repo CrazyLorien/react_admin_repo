@@ -18,10 +18,10 @@ export default function users(state = { usersList: [] }, action) {
             return Object.assign({}, { usersList: users });
 
         }
-    case 'GET_BY_ID':
+    case 'GET_USER_BY_ID':
         {
             let user = state.usersList.filter(x => x._id === action.data)[0];
-            return Object.assign({}, { usersList: users, editedUser: user });
+            return Object.assign({}, { usersList: state.usersList, editedUser: user });
         }
     default:
         return state;

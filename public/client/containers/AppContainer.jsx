@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Profile from "../profile/profile";
 import { connect, dispatch } from 'react-redux';
-import  usersAction  from '../action/users';
+import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';
 
 class AppContainer extends Component {

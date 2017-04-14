@@ -31,10 +31,10 @@ export default {
             );
         };
     },
-    'GET_BY_ID': function (id) {
+    'GET_USER_BY_ID': function (id) {
         return (dispatch) => {
             dispatch({
-                type: 'GET_BY_ID',
+                type: 'GET_USER_BY_ID',
                 data: id
             })
         };

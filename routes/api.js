@@ -2,6 +2,8 @@ var express = require('express');
 var router = express.Router();
 var User = require('../models/user')
 var ObjectId = require('mongoose').Types.ObjectId;
+var Role = require('../models/role');
+var Permission = require('../models/permission');
 
 //users
 
@@ -54,7 +56,7 @@ router.get('/roles', function (req, res, next) {
             return next(err);
         }
 
-        res.json(users);
+        res.json(roles);
     });
 });
 
@@ -71,15 +73,13 @@ router.post('/roles/:id', function (req, res, next) {
 
 
 router.put('/roles/:id/update', function (req, res, next) {
-    var query = Role.find({});
-
     Role.findOneAndUpdate({ _id: req.params.id }, req.body, { new: true }, function (err, role) {
         if (err) return next(err);
         res.json(role);
     });
 });
 
-router.delete('/roles/:name/delete', function (req, res, next) {
+router.delete('/roles/:id/delete', function (req, res, next) {
     var query = Role.find({});
 
     query.exec(function (err, roles) {
@@ -94,5 +94,15 @@ router.delete('/roles/:name/delete', function (req, res, next) {
 
 
 //permissions
+router.get('/permissions', function (req, res, next) {
+    var query = Permission.find({});
 
+    query.exec(function (err, pm) {
+        if (err) {
+            return next(err);
+        }
+
+        res.json(pm);
+    });
+});
 module.exports = router;

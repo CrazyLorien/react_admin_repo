@@ -1,7 +1,8 @@
 import React, {Component} from 'react';
 import ErrorComponent from '../errors/error';
-import usersAction  from '../action/users';
+import usersAction  from '../action/user';
 import { Router, Route, Link, browserHistory } from 'react-router';
+import RolesContainer from '../containers/RolesContainer';
 
 class Profile extends Component {
     constructor(){
@@ -12,6 +13,7 @@ class Profile extends Component {
 
         this.handleChange = this.handleChange.bind(this);
         this.handleSubmit = this.handleSubmit.bind(this);
+        this.selectRole = this.selectRole.bind(this);
         
     }
 
@@ -57,8 +59,32 @@ class Profile extends Component {
         this.props.updateUser(user);
     }
 
-    selectRole(role){      
-        this.setState( { Roles : this.state.Roles.push(role) })
+    selectRole(role){   
+       let Roles  = this.checkRoles(this.state.Roles, role) 
+       let user = {
+            id: this.props.user._id,
+            name: this.state.name,
+            password: this.state.password,
+            Images: [this.state.avatar],
+            Roles: this.state.Roles
+        }
+
+        user.Roles = Roles;
+        this.props.updateUser(user); 
+    }
+
+    checkRoles(roles, role){
+        let newRoles = [];
+        var count = roles.filter((ur, index) => { 
+            if(ur.name !== role.name){
+                return ur;
+            }
+        });
+
+        if(count.length === roles.length)
+            roles.push(role)
+
+        return newRoles.concat(roles);
     }
 
    
@@ -106,11 +132,19 @@ class Profile extends Component {
             </div>
             {isAdmin? (
                 <div className="input-field col s12">
-                    <Link to="/adminprofile/listofusers" activeStyle={{ color: 'red' }}>List of users</Link>
+                    <p><Link to="/adminprofile/listofusers" activeStyle={{ color: 'red' }}>List of users</Link></p>
+                    <p><Link to="/adminprofile/listofroles" activeStyle={{ color: 'red' }}>List of roles</Link></p>
                 </div>
             ) : (
                     <div></div>
                 )}
+
+            {            
+            (!isCurrentUser ) ? (
+                    <RolesContainer selectRole={ this.selectRole } userRoles={ this.state.Roles } getById = { this.props.getById } />
+                ) : (<div></div>)
+
+            }
        
             <ErrorComponent message={this.state.message} />
 

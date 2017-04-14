@@ -2,10 +2,10 @@ import React, {Component} from 'react';
 import ProfileList from "../profile/profilelist";
 import { connect, dispatch } from 'react-redux';
 import  rolesAction  from '../action/role';
-import ChooseRoles from '../roles/chooseRoles';
+import RolesList from '../roles/roleslist';
 
 
-class RolesContainer extends Component {
+class RolesListContainer extends Component {
     state = {  }
 
     componentWillReceiveProps(props){
@@ -17,7 +17,7 @@ class RolesContainer extends Component {
 
     render() {
         return (
-           <ChooseRoles roles={ this.props.roles } userRoles = { this.props.userRoles } handleCheck={this.props.selectRole }/>
+           <RolesList roles={ this.props.roles }  />
         );
     }
 }
@@ -32,4 +32,4 @@ export default connect((state) => {
             dispatch(rolesAction.RECEIVE_ALL_ROLES())
         }
     }
-})(RolesContainer)
+})(RolesListContainer)

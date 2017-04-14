@@ -8,6 +8,8 @@ import {Provider }from 'react-redux';
 import store from './stores/main';
 import UsersContainer from './containers/UsersContainer';
 import EditedUserContainer from './containers/EditedUserContainer';
+import RolesListContainer from './containers/RolesListContainer';
+import EditedRoleContainer from './containers/EditedRoleContainer';
 
 function requireAuth(nextState, replace) {
         if (!AuthService.isAuth()) {
@@ -27,8 +29,8 @@ class BarberComponent extends React.Component {
                                 <IndexRoute  component={AppContainer} onEnter={requireAuth} />
                                 <Route path="listofusers" component={UsersContainer} onEnter={requireAuth}/>
                                 <Route path="edituserprofile/:userid" component={EditedUserContainer} onEnter={requireAuth} />
-                                <Route path="editRoles/:userId" component={EditedUserContainer} onEnter={requireAuth} />
-                                <Route path="editRole/:roleId/editPermissions" component={EditedUserContainer} onEnter={requireAuth} />
+                                <Route path="listofroles" component={RolesListContainer} onEnter={requireAuth} />
+                                <Route path="editRole/:roleId" component={EditedRoleContainer} onEnter={requireAuth} />
                             </Route>
                             <Route path="start" component={AuthenticateComponent} />
                         </Router>

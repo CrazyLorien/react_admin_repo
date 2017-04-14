@@ -1,16 +1,22 @@
 import React, {Component} from 'react';
 import Profile from "../profile/profile";
 import { connect, dispatch } from 'react-redux';
-import  usersAction  from '../action/users';
+import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';
 
 class EditedUserContainer extends Component {
-    constructor(){
-        super();
+    constructor(props){
+        super(props);
     }
 
     componentDidMount(){   
-        if(this.props.editedUsers === undefined){                 
+        if(this.props.editedUser === undefined){                 
+            this.props.getById(this.props.params.userid);
+        }     
+    }
+
+    componentWillUpdate(){
+        if(this.props.editedUser === undefined){                 
             this.props.getById(this.props.params.userid);
         }     
     }
@@ -36,7 +42,7 @@ export default connect((state) => {
 }, function (dispatch) {
     return {
         getById: (id) => {
-            dispatch(usersAction.GET_BY_ID(id))
+            dispatch(usersAction.GET_USER_BY_ID(id))
         },
         updateUser: (user) => {
              dispatch(usersAction.UPDATE_USER(user))
