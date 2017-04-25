@@ -1,7 +1,8 @@
 var mongoose = require('mongoose');
 
-var Permisson = new mongoose.Schema({
-    name: String
+var Permission = new mongoose.Schema({
+    name: String,
+    description: String
 });
 
-module.exports = mongoose.model('Permisson', Permisson, 'permissions');
+module.exports = mongoose.model('Permission', Permission, 'permissions');

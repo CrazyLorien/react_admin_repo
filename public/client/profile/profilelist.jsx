@@ -15,18 +15,19 @@ class ProfileList extends Component {
                 {
                     column: 'name',
                     sortFunction: function(a, b){
-                        // Sort by last name
-                        var nameA = a.split(' ');
-                        var nameB = b.split(' ');
-
-                        return nameA[0].localeCompare(nameB[0]);
+                        return a.localeCompare(b);
                     }
                 }     
     ]
   }
 
-  handleClick = (row) => {
+  handleEditClick = (row) => {
      this.props.router.push(`/adminprofile/edituserprofile/${row._id}`);
+  }
+
+  handleCreateClick = (row) => {
+      this.props.clearUser();
+      this.props.router.push(`/adminprofile/createuser`); 
   }
 
  render() {
@@ -40,16 +41,22 @@ class ProfileList extends Component {
                             defaultSort={ {column: 'name', direction: 'asc' }} >
                             {this.props.users.map(function(row) {
                                     return (
-                                        <Tr key={row._id} onClick = { self.handleClick.bind(null, row) } >
+                                        <Tr key={row._id}  >
+                                            <Td column="edit"><button onClick = { self.handleEditClick.bind(null, row) }>Edit</button></Td>
                                             <Td column="name">{row.name}</Td>
-                                            <Td column="roles">{row.Roles.reduce( (prev, curr) => { return [...prev, curr.name.replace(' ', '')]}, '').join()}</Td>
-                                            <Td column="images">{ row.Images.join()}</Td>
+                                            <Td column="roles">{row.Roles.length > 0 ?
+                                                                            row.Roles.reduce( (prev, curr) => { return [...prev,curr.name ? curr.name.replace(' ', '') : '']}, '').join()
+                                                                          : ''
+                                                                            }</Td>
                                         </Tr>
                                     )
                                 })}
                         </Table>
                     </div>
+                    <div className="s12 create-usr-btn-container">                                   
+                            <button class="btn waves-effect" onClick={this.handleCreateClick}>Create user</button>
                     </div>
+                </div>
         );
                     
     }

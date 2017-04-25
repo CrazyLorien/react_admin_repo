@@ -12,14 +12,14 @@ class UsersContainer extends Component {
     }
 
     componentWillReceiveProps(props){
-        if(props.users.length <= 1 ){
+        if(props.users.length < this.props.users.length ){
             this.props.getAll();
         }
     }
 
     render() {
         return (
-            <ProfileList users={this.props.users}  />
+            <ProfileList users={this.props.users} clearUser={this.props.clearEditedUser}/>
         );
     }
 }
@@ -34,6 +34,9 @@ export default connect((state) => {
     return {
         getAll: () => {
             dispatch(usersAction.RECEIVE_ALL())
+        },
+        clearEditedUser: () => {
+            dispatch(usersAction.CLEAR_EDITED_USER())
         }
     }
 })(UsersContainer)

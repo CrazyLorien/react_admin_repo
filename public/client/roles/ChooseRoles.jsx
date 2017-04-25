@@ -7,15 +7,11 @@ class ChooseRoles extends Component {
         this.handleCheck = this.props.handleCheck.bind(this);
 
     }
-
-    componentWillMount(){
-        if( this.props.roles.length > 0 && this.props.userRoles === undefined){
-            //this.props.getById();
-        }
-    }
    
     render() {
-        return (this.props.roles != undefined && this.props.userRoles != undefined) ? (
+        return (this.props.roles != undefined
+                && this.props.userRoles != undefined
+                ) ? (
                     <div className="user-roles-container">
                         <p>List of user's roles</p>
                         <form>

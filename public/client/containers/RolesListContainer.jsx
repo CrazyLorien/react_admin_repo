@@ -8,6 +8,12 @@ import RolesList from '../roles/roleslist';
 class RolesListContainer extends Component {
     state = {  }
 
+    componentWillMount(){
+        if(this.props.roles === undefined || this.props.roles.length <= 1){
+            this.props.getAll();
+        }
+    }
+
     componentWillReceiveProps(props){
         if(props.roles === undefined || props.roles.length <= 1){
             this.props.getAll();
@@ -17,7 +23,7 @@ class RolesListContainer extends Component {
 
     render() {
         return (
-           <RolesList roles={ this.props.roles }  />
+           <RolesList roles={ this.props.roles }  clearRole={this.props.clearEditedRole} />
         );
     }
 }
@@ -30,6 +36,9 @@ export default connect((state) => {
     return {
         getAll: () => {
             dispatch(rolesAction.RECEIVE_ALL_ROLES())
+        },
+        clearEditedRole: () => {
+            dispatch(rolesAction.CLEAR_EDITED_ROLE())
         }
     }
 })(RolesListContainer)

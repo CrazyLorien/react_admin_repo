@@ -5,17 +5,33 @@ export default function roles(state = { rolesList: [] }, action) {
     case 'RECEIVE_ALL_ROLES':
         {
             let roles = action.data.concat();
+            let role = { Permissions: [] };
             return Object.assign({}, { rolesList: roles });
         }
     case 'UPDATE_ROLE':
         {
             let roles = state.rolesList.filter(x => x._id !== action.data._id).concat(action.data);
-            return Object.assign({}, { rolesList: roles });
+            return Object.assign({}, { rolesList: roles, editedRole: action.data });
+
+        }
+    case 'CREATE_ROLE':
+        {
+            let roles = state.rolesList.concat(action.data);
+            return Object.assign({}, { rolesList: roles, editedRole: action.data });
 
         }
     case 'GET_ROLE_BY_ID':
         {
-            let role = state.rolesList.filter(x => x._id === action.data)[0];
+            let roles = state.rolesList.filter(x => x._id !== action.data._id).concat(action.data);
+            let role = roles.filter(x => x._id === action.data._id)[0];
+            if (!role)
+                role = { Permissions: [] };
+
+            return Object.assign({}, { rolesList: roles, editedRole: role });
+        }
+    case 'CLEAR_EDITED_ROLE':
+        {
+            let role = { Permissions: [] };
             return Object.assign({}, { rolesList: state.rolesList, editedRole: role });
         }
     default:

@@ -9,7 +9,7 @@ class RolesContainer extends Component {
     state = {  }
 
     componentWillReceiveProps(props){
-        if(props.roles === undefined || props.roles.length <= 1){
+        if(props.roles === undefined || props.roles.length <= 0){
             this.props.getAll();
         }
     }

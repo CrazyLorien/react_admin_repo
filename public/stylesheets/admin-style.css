@@ -1,0 +1,40 @@
+button {
+    width: 300px;
+    padding: 10px;
+}
+
+.admin-area-title {
+    color: darkgrey;
+    font-weight: 900;
+    font-size: 23;
+    text-align: center;
+}
+
+.profile-list-container,
+.permissions-list-container,
+.permissions-container,
+.roles-permissions-container {
+    width: 80%;
+    margin: auto;
+}
+
+.profile-list-container p {
+    text-align: center;
+}
+
+.user-roles-container,
+.roles-permissions-container {
+    margin-top: 10px;
+}
+
+.create-role-container,
+.create-pms-btn-container,
+.create-usr-btn-container {
+    text-align: center;
+}
+
+.admins-resources-container {
+    position: absolute;
+    top: 5%;
+    left: 5%;
+}

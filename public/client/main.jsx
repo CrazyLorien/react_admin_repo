@@ -10,10 +10,11 @@ import UsersContainer from './containers/UsersContainer';
 import EditedUserContainer from './containers/EditedUserContainer';
 import RolesListContainer from './containers/RolesListContainer';
 import EditedRoleContainer from './containers/EditedRoleContainer';
+import PermissionsContainer from './containers/PermissionsContainer';
 
 function requireAuth(nextState, replace) {
         if (!AuthService.isAuth()) {
-            if (location.state && location.state.nextPathname) {
+            if (location.state && location.state.nextPathname) {              
                 this.props.router.replace(location.state.nextPathname)
             }else {
                 this.props.router.replace('/');
@@ -29,10 +30,13 @@ class BarberComponent extends React.Component {
                                 <IndexRoute  component={AppContainer} onEnter={requireAuth} />
                                 <Route path="listofusers" component={UsersContainer} onEnter={requireAuth}/>
                                 <Route path="edituserprofile/:userid" component={EditedUserContainer} onEnter={requireAuth} />
+                                <Route path="createuser" component={EditedUserContainer} onEnter={requireAuth} />
                                 <Route path="listofroles" component={RolesListContainer} onEnter={requireAuth} />
+                                <Route path="createrole" component={EditedRoleContainer} onEnter={requireAuth} />
                                 <Route path="editRole/:roleId" component={EditedRoleContainer} onEnter={requireAuth} />
+                                <Route path="listofpermissions" component={PermissionsContainer} onEnter={requireAuth} />
                             </Route>
-                            <Route path="start" component={AuthenticateComponent} />
+                            <Route path="/" component={AuthenticateComponent} />
                         </Router>
                 </Provider>
                 

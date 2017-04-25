@@ -3,6 +3,7 @@ import Profile from "../profile/profile";
 import { connect, dispatch } from 'react-redux';
 import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';
+import errorsAction from '../action/error';
 
 class AppContainer extends Component {
     componentDidMount(){
@@ -20,9 +21,14 @@ class AppContainer extends Component {
     }
 
     render() {
-        return (
-            <Profile user={this.props.users.usersList[0]} updateUser = {this.props.UpdateUser}  />
-        );
+        let authUser = AuthService.getAuthUser();
+        if(authUser){
+            let user = this.props.users.usersList.filter( (usr) => usr.name === authUser.name)[0]
+            return (
+                <Profile user={user} updateUser = {this.props.UpdateUser} errors={this.props.errors} canSubmit={ this.props.clienterrors }
+                      setClientErrors ={ this.props.setClientErrors}  clearAll={ this.props.clearAll}  />
+            );
+        }
     }
 }
 
@@ -30,7 +36,9 @@ class AppContainer extends Component {
 
 export default connect((state) => {
     return {
-        users : state.users
+        users : state.users,
+        errors: state.errors.errorsList,
+        clienterrors: state.errors.clientErrorsExistance
     }
 }, function (dispatch) {
     return {
@@ -42,6 +50,12 @@ export default connect((state) => {
         },
         UpdateUser:(user) => {
             dispatch(usersAction.UPDATE_USER(user))       
+        },
+        setClientErrors: () => {
+            dispatch(errorsAction.SET_CLIENT_VALIDATION_ERRORS())
+        },
+        clearAll: () =>{
+            dispatch(errorsAction.CLEAR_ALL())
         }
     }
 })(AppContainer)

@@ -13,20 +13,21 @@ class Roleslist extends Component {
 
         this.sortable = [
                 {
-                    column: 'name',
-                    sortFunction: function(a, b){
-                        // Sort by last name
-                        var nameA = a.split(' ');
-                        var nameB = b.split(' ');
-
-                        return nameA[0].localeCompare(nameB[0]);
+                   column: 'role',
+                   sortFunction: function(a, b){
+                        return a.localeCompare(b);
                     }
                 }     
     ]
   }
 
-  handleClick = (row) => {
+  handleEditClick = (row) => {
      this.props.router.push(`/adminprofile/editrole/${row._id}`);
+  }
+
+  handleClickCreateRole = () => {
+     this.props.clearRole();
+     this.props.router.push(`/adminprofile/createrole`);
   }
 
  render() {
@@ -34,20 +35,24 @@ class Roleslist extends Component {
         return  (
                 <div>               
                     <div className="profile-list-container">
-                    <p>List of roles</p>
-                    <Table className="table" id="table" 
-                            sortable={this.sortable}
-                            defaultSort={ {column: 'name', direction: 'asc' }} >
-                            {this.props.roles.map(function(row) {
-                                    return (
-                                        <Tr key={row._id} onClick = { self.handleClick.bind(null, row) } >
-                                            <Td column="role">{row.name}</Td>
-                                            <Td column="permissions">{row.Permissions.reduce( (prev, curr) => { return [...prev, curr.replace(' ', '')]}, '').join()}</Td>
-                                        </Tr>
-                                    )
-                                })}
-                        </Table>
-                    </div>
+                        <p>List of roles</p>
+                        <Table className="table" id="table" 
+                                sortable={this.sortable}
+                                defaultSort={ {column: 'name', direction: 'asc' }} >
+                                {this.props.roles.map(function(row) {
+                                        return (
+                                            <Tr key={row._id}   >
+                                                <Td column="edit"><button onClick = { self.handleEditClick.bind(null, row) }>Edit</button></Td>
+                                                <Td column="role">{row.name}</Td>
+                                                <Td column="permissions">{row.Permissions.length > 0 ? 
+                                                            row.Permissions.reduce( (prev, curr) => { return [...prev, curr.replace(' ', '')]}, '').join()
+                                                             : ''}</Td>
+                                            </Tr>
+                                        )
+                                    })}
+                            </Table>
+                        </div>
+                        <p className="create-role-container"><button onClick={this.handleClickCreateRole}>Create Role</button></p>
                     </div>
         );
                     

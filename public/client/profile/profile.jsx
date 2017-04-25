@@ -3,12 +3,14 @@ import ErrorComponent from '../errors/error';
 import usersAction  from '../action/user';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import RolesContainer from '../containers/RolesContainer';
+import Validator from '../core/validator';
 
 class Profile extends Component {
     constructor(){
         super();
         this.state = {
-            message : ""
+            message : "",
+            canSubmit: true
         };
 
         this.handleChange = this.handleChange.bind(this);
@@ -19,21 +21,20 @@ class Profile extends Component {
 
     //lifecycle hooks
     componentDidMount(){
-        if(this.props.user !== undefined && this.props.user.name !== undefined)     
+        if(this.props.user !== undefined){     
             this.setState({
                 message : "",
-                avatar: this.props.user.Images[0] || 'images/default.jpg',
                 name : this.props.user.name,
                 password : this.props.user.password,
                 Roles: this.props.user.Roles
             });
+     }
     }
 
     componentWillReceiveProps(props){
-        if(props.user.name !== undefined)     
+        if(props.user !== undefined)     
             this.setState({
                 message : "",
-                avatar: props.user.Images[0] || 'images/default.jpg',
                 name : props.user.name,
                 password : props.user.password,
                 Roles: props.user.Roles
@@ -50,49 +51,65 @@ class Profile extends Component {
     handleSubmit(event) {
         event.preventDefault();
         let user = {
-            id: this.props.user._id,
+            id: this.props.user ? this.props.user._id : undefined,
             name: this.state.name,
             password: this.state.password,
             Images: [this.state.avatar],
             Roles: this.state.Roles
         }
-        this.props.updateUser(user);
+
+        if(user.id)
+            this.props.updateUser(user);
+        else
+            this.props.createUser(user)
     }
 
     selectRole(role){   
        let Roles  = this.checkRoles(this.state.Roles, role) 
        let user = {
-            id: this.props.user._id,
+            id: this.props.user ? this.props.user._id : undefined,
             name: this.state.name,
             password: this.state.password,
-            Images: [this.state.avatar],
             Roles: this.state.Roles
         }
 
         user.Roles = Roles;
-        this.props.updateUser(user); 
+
+        if(user.id)
+            this.props.updateUser(user);
+        else
+            this.props.createUser(user)
     }
 
     checkRoles(roles, role){
         let newRoles = [];
-        var count = roles.filter((ur, index) => { 
+        let index = -1;
+        var count = roles.filter((ur, ind) => { 
             if(ur.name !== role.name){
                 return ur;
+            }
+            else{
+                index = ind;
             }
         });
 
         if(count.length === roles.length)
+        {
             roles.push(role)
+        }
+        else{
+            roles.splice(index, 1);
+        }
 
         return newRoles.concat(roles);
     }
 
    
     render() {
-        let isAdmin = this.state.Roles ? this.state.Roles.filter( (role) => role.Permissions.indexOf('Update') > -1).length > 0 : false;
+        let isAdmin = this.state.Roles ? this.state.Roles.filter( (role) => { return role.name.indexOf('Admin') > -1 }).length > 0 : false;
         let isCurrentUser = this.props.isCurrentUser;
         return (<div className="container">
-            Admin
+            Admin profile
             <div className="row" >
                 <form className="col s12" onSubmit={this.handleSubmit} >
                     <div className="row">
@@ -102,51 +119,54 @@ class Profile extends Component {
 
                         <div className="input-field col s11">
                             <input id="Name" type="text" className="validate" name="name" value={this.state.name} onChange={this.handleChange}/>
-                        </div>                      
+                        </div>                     
                         
                     </div>
                     <div className="row">
                         <div className="input-field col s1">
-                            <label for="email">Password</label>
+                            <label for="password">Password</label>
                         </div>
                         <div className="input-field col s11">
-                            <input id="email" type="text" className="validate" name="password" value={this.state.password} onChange={this.handleChange}/>
-                        </div>
-                    </div>
-                    <div className="row">
-                        <div className="input-field col s1">
-                            <label for="email">Image</label>
-                        </div>
-                        <div className="input-field col s11">
-                            <img src={ this.state.avatar} />
-                        </div>
-                         <div className="input-field col s11">
-                            <input type="text" name="avatar" onChange={this.handleChange} />
+                            <input id="password" type="text" className="validate" name="password" value={this.state.password} onChange={this.handleChange}/>
                         </div>
                     </div>
 
-                    <div className="s12">
-                        <button class="btn waves-effect" >Save</button>
-                    </div>
+                    <div>
+                            <Validator data={ [{ "name": this.state.name, "propname": "name", validationRule: ['require']}, 
+                            { "name" : this.state.password,  "propname": "password", validationRule: ['require'] } ] } 
+                            setClientErrors={ this.props.setClientErrors} canSubmit={this.props.canSubmit} clearAll = { this.props.clearAll}/> 
+                   </div> 
+
+                    {
+                        !this.props.canSubmit 
+                            ? 
+                                (<div className="s12">
+                                    <button class="btn waves-effect" >Save</button>
+                                </div>)
+                            : (<div className="s12">
+                                    <button class="btn waves-effect" disabled >Save</button>
+                                </div>)  
+                    }
                 </form>
             </div>
             {isAdmin? (
-                <div className="input-field col s12">
+                <div className="input-field col s12 admins-resources-container">
                     <p><Link to="/adminprofile/listofusers" activeStyle={{ color: 'red' }}>List of users</Link></p>
                     <p><Link to="/adminprofile/listofroles" activeStyle={{ color: 'red' }}>List of roles</Link></p>
+                    <p><Link to="/adminprofile/listofpermissions" activeStyle={{ color: 'red' }}>List of permissions</Link></p>
                 </div>
             ) : (
                     <div></div>
                 )}
 
             {            
-            (!isCurrentUser ) ? (
+            (!this.props.canSubmit ) ? (
                     <RolesContainer selectRole={ this.selectRole } userRoles={ this.state.Roles } getById = { this.props.getById } />
                 ) : (<div></div>)
 
             }
        
-            <ErrorComponent message={this.state.message} />
+            <ErrorComponent message={this.props.errors} />
 
             <div>{this.props.children}</div>
         </div>)

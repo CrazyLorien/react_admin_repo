@@ -55,41 +55,19 @@ passp(app, passport, flash)
 var mustAuthenticatedMw = function (req, res, next) {
     req.isAuthenticated() ?
         next() :
-        res.redirect('/login');
+        res.redirect('/start');
 };
 
-app.get('/admin', function (req, res, next) {
-    req.isAuthenticated() ?
-        res.redirect('/barbersgrid') :
-        res.redirect('/login');
-});
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
-app.use('/start', routes);
 app.use('/api', api);
+app.use('*', routes);
 
 
-app.get('/endpoints', function (req, res) {
-    var route, routes = [];
-
-    app._router.stack.forEach(function (middleware) {
-        if (middleware.route) { // routes registered directly on the app
-            routes.push(middleware.route);
-        } else if (middleware.name === 'router') { // router middleware       
-            middleware.handle.stack.forEach(function (handler) {
-                route = handler.route;
-                route && routes.push(route);
-            });
-        }
-    });
-
-    res.render('endpoints', { routes: routes });
-});
-
-// catch 404 and forward to error handler
-app.use(function (req, res, next) {
+app.all('*', function (req, res, next) {
     if (req.user) {
         res.cookie('user', JSON.stringify({ 'id': req.user.id }), { httpOnly: false });
     } else {
@@ -97,27 +75,21 @@ app.use(function (req, res, next) {
     }
 });
 
-/*app.all('/*', function(req, res, next) {    
-    if(req.user) {        
-        res.cookie('user', JSON.stringify({'id': req.user.id}), { httpOnly: false } );
-    } else {
-        res.clearCookie("user");
-    }
-
-    next();
-}); */
-
 app.use(express.static(__dirname + '/public'));
 
 // development error handler
 // will print stacktrace
 if (app.get('env') === 'development') {
     app.use(function (err, req, res, next) {
-        res.status(err.status || 500);
-        res.json('error', {
-            message: err.message || err.info,
-            error: err
-        });
+        try {
+            res.status(err.status || 500);
+            res.json('error', {
+                message: err.message || err.info,
+                error: err
+            });
+        } catch (ERR) {
+
+        }
     });
 }
 

@@ -13,6 +13,15 @@ class AuthenticateComponent extends React.Component {
     this.auth = this.auth || new AuthService(this.props.router);
   }
 
+  componentWillMount(){
+      if(AuthService.getAuthUser().name){
+            let pathname = this.props.location.pathname;
+            this.auth.router.push({
+                    pathname: 'adminprofile'
+                });
+      }
+  }
+
   handleChange(event) {
     const name = event.target.name;
     this.setState({ [name]: event.target.value});
@@ -63,7 +72,7 @@ class AuthenticateComponent extends React.Component {
                                    </div>
                               </form>                         
                         </div>
-                        <ErrorComponent message={this.state.message} />
+                        <ErrorComponent message={[ { message : this.state.message }]} />
                     </div>
     }
 }
