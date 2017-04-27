@@ -13,23 +13,6 @@ var api = require('./routes/api');
 var mongoose = require('mongoose');
 var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || config.get('db:connection') + '/' + config.get('db:name');
 var db = mongoose.connection;
-var server;
-
-//db 
-mongoose.connect(dbUrl, function (err) {
-    if (err) {
-        console.log('Connection error'.red, err);
-    }
-
-    console.log('Connection with barber db was successful..'.yellow);
-
-    server = app.listen(process.env.PORT || app.get('port'), function () {
-        console.log('Starting up Express http-server, listening on port '.yellow + (process.env.PORT || app.get('port')).toString().underline.cyan + '..');
-        console.log('Hit CTRL-C to stop the server'.grey);
-        require('./Vendor/socket')(server, cookieParser, ps.session);
-    });
-});
-var db = mongoose.connection;
 
 mongoose.connect(dbUrl, function (err) {
     if (err) {
