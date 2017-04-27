@@ -27,8 +27,12 @@ class EditedRoleContainer extends Component {
     }
 
      componentWillReceiveProps(props){
-         if(props.editedRole === undefined && this.props.params.roleId){            
+        if(props.editedRole === undefined && this.props.params.roleId){            
             this.props.getById(this.props.params.roleId); 
+        }
+        else if(this.props.editedRole._id !== this.props.params.roleId)
+        {
+            this.props.getById(this.props.params.roleId);
         }
         else if(props.editedRole._id !== undefined && !this.props.params.roleId){
            this.props.clearAll();

@@ -6,7 +6,7 @@ export default function roles(state = { rolesList: [] }, action) {
         {
             let roles = action.data.concat();
             let role = { Permissions: [] };
-            return Object.assign({}, { rolesList: roles });
+            return Object.assign({}, { rolesList: roles, editedRole: role });
         }
     case 'UPDATE_ROLE':
         {
