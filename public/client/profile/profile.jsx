@@ -64,7 +64,9 @@ class Profile extends Component {
             this.props.createUser(user)
     }
 
-    selectRole(role){   
+    selectRole(role){ 
+       if(!role.name)  
+            return;
        let Roles  = this.checkRoles(this.state.Roles, role) 
        let user = {
             id: this.props.user ? this.props.user._id : undefined,
