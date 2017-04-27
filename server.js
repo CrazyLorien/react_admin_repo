@@ -11,7 +11,7 @@ var routes = require('./routes/index');
 var api = require('./routes/api');
 
 var mongoose = require('mongoose');
-var dbUrl = process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || config.get('db:connection') + '/' + config.get('db:name');
+var dbUrl = process.env.MONGODB_URI || process.env.MONGOLAB_URI || process.env.MONGOHQ_URL || config.get('db:connection') + '/' + config.get('db:name');
 var db = mongoose.connection;
 
 mongoose.connect(dbUrl, function (err) {
