@@ -75,7 +75,7 @@ class PermissionsCreator extends Component {
                         !this.props.canSubmit 
                             ?
                                 (<div className="s12">                                   
-                                    <button class="btn waves-effect" onClick={this.handleSubmit}>Save</button>
+                                    <button className="btn waves-effect" onClick={this.handleSubmit}>Save</button>
                                 </div>)
                             : <div></div>
                         }

@@ -53,7 +53,7 @@ class Permissionslist extends Component {
                         </Table>
                     </div>
                         <div className="s12 create-pms-btn-container">                                   
-                            <button class="btn waves-effect" onClick={self.handleClick.bind(null, null)}>Create</button>
+                            <button className="btn waves-effect" onClick={self.handleClick.bind(null, null)}>Create</button>
                         </div>
                     </div>
         );

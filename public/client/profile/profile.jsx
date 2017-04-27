@@ -114,7 +114,7 @@ class Profile extends Component {
                 <form className="col s12" onSubmit={this.handleSubmit} >
                     <div className="row">
                         <div className="input-field col s1">
-                            <label for="name">First Name</label>
+                            <label htmlFor="name">First Name</label>
                         </div>
 
                         <div className="input-field col s11">
@@ -124,10 +124,10 @@ class Profile extends Component {
                     </div>
                     <div className="row">
                         <div className="input-field col s1">
-                            <label for="password">Password</label>
+                            <label htmlFor="password">Password</label>
                         </div>
                         <div className="input-field col s11">
-                            <input id="password" type="text" className="validate" name="password" value={this.state.password} onChange={this.handleChange}/>
+                            <input id="password" type="password" className="validate" name="password" value={this.state.password} onChange={this.handleChange}/>
                         </div>
                     </div>
 
@@ -141,10 +141,10 @@ class Profile extends Component {
                         !this.props.canSubmit 
                             ? 
                                 (<div className="s12">
-                                    <button class="btn waves-effect" >Save</button>
+                                    <button className="btn waves-effect" >Save</button>
                                 </div>)
                             : (<div className="s12">
-                                    <button class="btn waves-effect" disabled >Save</button>
+                                    <button className="btn waves-effect" disabled >Save</button>
                                 </div>)  
                     }
                 </form>

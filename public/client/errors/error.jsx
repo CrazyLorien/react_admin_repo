@@ -11,8 +11,8 @@ class ErrorComponent extends Component {
         return this.props.message ?
             (<div>
                 {
-            this.props.message.map( er => { 
-                    return (<div>
+            this.props.message.map( (er,i)=> { 
+                    return (<div key={i}>
                         {er.message}
                     </div>)
                     })

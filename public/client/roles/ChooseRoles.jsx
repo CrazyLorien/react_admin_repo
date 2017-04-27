@@ -19,10 +19,10 @@ class ChooseRoles extends Component {
                                 this.props.roles.map((role) => {
                                     let checked = this.props.userRoles.filter( (urole) => urole.name === role.name).length > 0;
                                     //here we should check does role contain in user roles and then check or uncheck it  
-                                    return (<div className="row">
+                                    return (<div className="row" key={role._id}>
                                                 <div className = "col s12">
                                                     <input type="checkbox" id={role.name} checked={checked} onChange={this.handleCheck} />
-                                                    <label for={role.name} onClick = {this.handleCheck.bind(null, { name : role.name, Permissions: role.Permissions })} >{role.name}</label>
+                                                    <label htmlFor={role.name} onClick = {this.handleCheck.bind(null, { name : role.name, Permissions: role.Permissions })} >{role.name}</label>
                                                 </div>
                                         </div>);
                                 })

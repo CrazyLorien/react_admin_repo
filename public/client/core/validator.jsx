@@ -43,8 +43,8 @@ class Validator extends Component {
         return (
             <div className="validator container">
             {
-                this.errors.map( (msg) => {
-                    return (<div>{msg}</div>);
+                this.errors.map( (msg, i) => {
+                    return (<div key={i}>{msg}</div>);
                 })
             }
             </div>

@@ -3,6 +3,7 @@
 	npm install mongoose
 2. install npm packages (run in console from app root):
 	npm install
+3. install npm packages in app/public/client folder
 3. create db adminDb in mongo db (use robomongo or cmd)
 4. populate db with data (run in console from app root):
 	node ./node_modules/mongodb-migrate -runmm -dbn dbSettings up	

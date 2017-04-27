@@ -1,11 +1,9 @@
 var LocalStrategy = require('passport-local').Strategy;
-var VKontakteStrategy = require('passport-vkontakte').Strategy;
 var User = require('../models/user')
 
 module.exports = function (app, passport, flash) {
     app.use(passport.initialize());
     app.use(passport.session());
-    app.use(flash());
 
     passport.serializeUser(function (user, done) {
         done(null, user.id);
@@ -34,7 +32,7 @@ module.exports = function (app, passport, flash) {
     );
 
     app.get('/login', function (req, res, next) {
-        res.json({ message: req.flash('error') });
+        res.json({ message: 'error on login' });
     });
 
 

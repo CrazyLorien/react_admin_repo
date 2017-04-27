@@ -54,7 +54,7 @@ class ProfileList extends Component {
                         </Table>
                     </div>
                     <div className="s12 create-usr-btn-container">                                   
-                            <button class="btn waves-effect" onClick={this.handleCreateClick}>Create user</button>
+                            <button className="btn waves-effect" onClick={this.handleCreateClick}>Create user</button>
                     </div>
                 </div>
         );

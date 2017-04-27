@@ -10,9 +10,6 @@ var colors = require('colors');
 var routes = require('./routes/index');
 var api = require('./routes/api');
 
-
-var flash = require('connect-flash');
-
 var mongoose = require('mongoose');
 var dbUrl = config.get('db:connection') + '/' + config.get('db:name');
 var db = mongoose.connection;
@@ -49,7 +46,7 @@ app.use(session({ secret: 'keyboard cat' }));
 
 var passport = require('passport');
 var passp = require('./config/passportConfig');
-passp(app, passport, flash)
+passp(app, passport)
 
 
 var mustAuthenticatedMw = function (req, res, next) {
