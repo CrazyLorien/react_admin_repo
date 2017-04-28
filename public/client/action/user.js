@@ -1,11 +1,12 @@
 let usersUrl = '/api/users';
+import constants from '../core/constants';
 
 export default {
-    'GET_ALL': {
-        type: 'GET_ALL',
+    GET_ALL: {
+        type: GET_ALL,
         data: null
     },
-    'RECEIVE_ALL': function () {
+    RECEIVE_ALL: function () {
         return (dispatch) => {
             $.get(usersUrl).then(
                 (resp) => {
@@ -18,12 +19,12 @@ export default {
             );
         };
     },
-    'GET_BY_NAME': function (name) {
+    GET_BY_NAME: function (name) {
         return (dispatch) => {
             $.get(usersUrl + '/name/' + name).then(
                 (resp) => {
                     dispatch({
-                        type: 'GET_BY_NAME',
+                        type: GET_BY_NAME,
                         data: resp
                     })
 
@@ -31,12 +32,12 @@ export default {
             );
         };
     },
-    'GET_USER_BY_ID': function (id) {
+    GET_USER_BY_ID: function (id) {
         return (dispatch) => {
             $.get(usersUrl + '/' + id).then(
                 (resp) => {
                     dispatch({
-                        type: 'GET_USER_BY_ID',
+                        type: GET_USER_BY_ID,
                         data: resp
                     })
 
@@ -44,7 +45,7 @@ export default {
             );
         }
     },
-    'UPDATE_USER': function (user) {
+    UPDATE_USER: function (user) {
         return (dispatch) => {
 
             $.ajax({
@@ -52,7 +53,7 @@ export default {
                 type: 'PUT',
                 success: (resp) => {
                     dispatch({
-                        type: 'UPDATE_USER',
+                        type: UPDATE_USER,
                         data: resp
                     })
                 },
@@ -61,14 +62,14 @@ export default {
             });
         }
     },
-    'CREATE_USER': function (user) {
+    CREATE_USER: function (user) {
         return (dispatch) => {
             $.ajax({
                 url: `${usersUrl}/create`,
                 type: 'POST',
                 success: (resp) => {
                     dispatch({
-                        type: 'CREATE_USER',
+                        type: CREATE_USER,
                         data: resp
                     })
                 },
@@ -77,10 +78,10 @@ export default {
             });
         }
     },
-    'CLEAR_EDITED_USER': function () {
+    CLEAR_EDITED_USER: function () {
         return (dispatch) => {
             dispatch({
-                type: 'CLEAR_EDITED_USER',
+                type: CLEAR_EDITED_USER,
                 data: null
             })
         }

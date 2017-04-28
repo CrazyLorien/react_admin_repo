@@ -36,7 +36,7 @@ class EditedRoleContainer extends Component {
         if(props.editedRole === undefined && this.props.params.roleId){            
             this.props.getById(this.props.params.roleId); 
         }
-        else if(this.props.editedRole._id !== this.props.params.roleId)
+        else if(this.props.editedRole !== undefined && this.props.editedRole._id !== this.props.params.roleId)
         {
             this.props.getById(this.props.params.roleId);
         }

@@ -15,7 +15,17 @@ module.exports = {
     devtool: '#inline-source-map',
     debug: true,
     module: {
-        loaders: [{
+        preLoaders: [],
+        loaders: [
+            // {
+            //     test: /\.jsx?$/,
+            //     // we are using `eslint-loader` explicitly since
+            //     // we have ESLint module installed. This way we
+            //     // can be certain that it uses the right loader
+            //     loader: 'eslint-loader',
+            //     include: path.join(__dirname, "./node_modules"),
+            // },
+            {
                 test: /\.jsx?$/,
                 loaders: ['babel'],
                 exclude: /node_modules/,

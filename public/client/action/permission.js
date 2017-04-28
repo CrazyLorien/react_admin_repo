@@ -1,11 +1,13 @@
 let permissionsUrl = '/api/permissions';
+import constants from '../core/constants';
+
 export default {
-    'RECEIVE_ALL_PERMISSIONS': function () {
+    RECEIVE_ALL_PERMISSIONS: function () {
         return (dispatch) => {
             $.get(permissionsUrl).then(
                 (resp) => {
                     dispatch({
-                        type: 'RECEIVE_ALL_PERMISSIONS',
+                        type: RECEIVE_ALL_PERMISSIONS,
                         data: resp
                     })
 
@@ -13,15 +15,15 @@ export default {
             );
         };
     },
-    'GET_PERMISSION_BY_ID': function (id) {
+    GET_PERMISSION_BY_ID: function (id) {
         return (dispatch) => {
             dispatch({
-                type: 'GET_PERMISSION_BY_ID',
+                type: GET_PERMISSION_BY_ID,
                 data: id
             })
         };
     },
-    'UPDATE_PERMISSION': function (pm) {
+    UPDATE_PERMISSION: function (pm) {
         return (dispatch) => {
 
             $.ajax({
@@ -29,7 +31,7 @@ export default {
                 type: 'PUT',
                 success: (resp) => {
                     dispatch({
-                        type: 'UPDATE_PERMISSION',
+                        type: UPDATE_PERMISSION,
                         data: resp
                     })
                 },
@@ -38,7 +40,7 @@ export default {
             });
         }
     },
-    'CREATE_PERMISSION': function (pm) {
+    CREATE_PERMISSION: function (pm) {
         return (dispatch) => {
 
             $.ajax({
@@ -46,7 +48,7 @@ export default {
                 type: 'POST',
                 success: (resp) => {
                     dispatch({
-                        type: 'CREATE_PERMISSION',
+                        type: CREATE_PERMISSION,
                         data: resp
                     })
                 },

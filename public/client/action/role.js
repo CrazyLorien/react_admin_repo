@@ -1,11 +1,13 @@
 let rolesUrl = '/api/roles';
+import  constants  from '../core/constants';
+
 export default {
-    'RECEIVE_ALL_ROLES': function () {
+    RECEIVE_ALL_ROLES: function () {
         return (dispatch) => {
             $.get(rolesUrl).then(
                 (resp) => {
                     dispatch({
-                        type: 'RECEIVE_ALL_ROLES',
+                        type: RECEIVE_ALL_ROLES,
                         data: resp
                     })
 
@@ -13,12 +15,12 @@ export default {
             );
         };
     },
-    'GET_ROLE_BY_ID': function (id) {
+    GET_ROLE_BY_ID: function (id) {
         return (dispatch) => {
             $.get(rolesUrl + '/' + id).then(
                 (resp) => {
                     dispatch({
-                        type: 'GET_ROLE_BY_ID',
+                        type: GET_ROLE_BY_ID,
                         data: resp
                     })
 
@@ -26,7 +28,7 @@ export default {
             );
         }
     },
-    'UPDATE_ROLE': function (role) {
+    UPDATE_ROLE: function (role) {
         return (dispatch) => {
 
             $.ajax({
@@ -34,7 +36,7 @@ export default {
                 type: 'PUT',
                 success: (resp) => {
                     dispatch({
-                        type: 'UPDATE_ROLE',
+                        type: UPDATE_ROLE,
                         data: resp
                     })
                 },
@@ -43,7 +45,7 @@ export default {
             });
         };
     },
-    'CREATE_ROLE': function (role) {
+    CREATE_ROLE: function (role) {
         return (dispatch) => {
 
             $.ajax({
@@ -51,13 +53,13 @@ export default {
                 type: 'POST',
                 success: (resp) => {
                     dispatch({
-                        type: 'CREATE_ROLE',
+                        type: CREATE_ROLE,
                         data: resp
                     })
                 },
                 error: (err) => {
                     dispatch({
-                        type: 'SHOW_ERRORS',
+                        type: SHOW_ERRORS,
                         data: err.responseJSON
                     })
                 },
@@ -66,10 +68,10 @@ export default {
             });
         }
     },
-    'CLEAR_EDITED_ROLE': function () {
+    CLEAR_EDITED_ROLE: function () {
         return (dispatch) => {
             dispatch({
-                type: 'CLEAR_EDITED_ROLE',
+                type: CLEAR_EDITED_ROLE,
                 data: null
             })
         }
