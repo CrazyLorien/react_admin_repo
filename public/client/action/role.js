@@ -1,77 +1,49 @@
 let rolesUrl = '/api/roles';
-import  constants  from '../core/constants';
+import constants from '../core/constants';
 
 export default {
     RECEIVE_ALL_ROLES: function () {
         return (dispatch) => {
-            $.get(rolesUrl).then(
-                (resp) => {
-                    dispatch({
-                        type: RECEIVE_ALL_ROLES,
-                        data: resp
-                    })
-
-                }
-            );
-        };
+            dispatch({
+                type: constants.RECEIVE_ALL_ROLES,
+                apiPath: rolesUrl,
+                reqType: 'GET'
+            });
+        }
     },
     GET_ROLE_BY_ID: function (id) {
         return (dispatch) => {
-            $.get(rolesUrl + '/' + id).then(
-                (resp) => {
-                    dispatch({
-                        type: GET_ROLE_BY_ID,
-                        data: resp
-                    })
-
-                }
-            );
+            dispatch({
+                type: constants.GET_ROLE_BY_ID,
+                apiPath: rolesUrl + '/' + id,
+                reqType: 'GET'
+            });
         }
     },
     UPDATE_ROLE: function (role) {
         return (dispatch) => {
-
-            $.ajax({
-                url: `${rolesUrl}/${role._id}/update`,
-                type: 'PUT',
-                success: (resp) => {
-                    dispatch({
-                        type: UPDATE_ROLE,
-                        data: resp
-                    })
-                },
-                data: JSON.stringify(role),
-                contentType: 'application/json;charset=utf-8'
+            dispatch({
+                type: constants.UPDATE_ROLE,
+                apiPath: `${rolesUrl}/${role._id}/update`,
+                reqType: 'PUT',
+                data: role
             });
-        };
+        }
     },
     CREATE_ROLE: function (role) {
         return (dispatch) => {
-
-            $.ajax({
-                url: `${rolesUrl}/create`,
-                type: 'POST',
-                success: (resp) => {
-                    dispatch({
-                        type: CREATE_ROLE,
-                        data: resp
-                    })
-                },
-                error: (err) => {
-                    dispatch({
-                        type: SHOW_ERRORS,
-                        data: err.responseJSON
-                    })
-                },
-                data: JSON.stringify(role),
-                contentType: 'application/json;charset=utf-8'
+            dispatch({
+                type: constants.CREATE_ROLE,
+                apiPath: `${rolesUrl}/create`,
+                reqType: 'POST',
+                data: role
             });
         }
     },
     CLEAR_EDITED_ROLE: function () {
         return (dispatch) => {
             dispatch({
-                type: CLEAR_EDITED_ROLE,
+                type: constants.CLEAR_EDITED_ROLE,
                 data: null
             })
         }

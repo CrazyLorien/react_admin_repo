@@ -8,12 +8,12 @@ class ErrorComponent extends Component {
 
     
     render() {
-        return this.props.message ?
+        return this.props.message  ?
             (<div>
                 {
             this.props.message.map( (er,i)=> { 
                     return (<div key={i}>
-                        {er.message}
+                        {er.message || er.responseJSON ? er.responseJSON.message : ""}
                     </div>)
                     })
                 }

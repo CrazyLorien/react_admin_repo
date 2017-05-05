@@ -8,6 +8,12 @@ import ChooseRoles from '../roles/chooseRoles';
 class RolesContainer extends Component {
     state = {  }
 
+    componentDidMount(){
+        if(this.props.roles === undefined || this.props.roles.length <= 0){
+            this.props.getAll();
+        }
+    }
+
     componentWillReceiveProps(props){
         if(props.roles === undefined || props.roles.length <= 0){
             this.props.getAll();

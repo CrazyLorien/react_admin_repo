@@ -7,7 +7,7 @@ export default {
             $.get(permissionsUrl).then(
                 (resp) => {
                     dispatch({
-                        type: RECEIVE_ALL_PERMISSIONS,
+                        type: constants.RECEIVE_ALL_PERMISSIONS,
                         data: resp
                     })
 
@@ -18,7 +18,7 @@ export default {
     GET_PERMISSION_BY_ID: function (id) {
         return (dispatch) => {
             dispatch({
-                type: GET_PERMISSION_BY_ID,
+                type: constants.GET_PERMISSION_BY_ID,
                 data: id
             })
         };
@@ -31,7 +31,7 @@ export default {
                 type: 'PUT',
                 success: (resp) => {
                     dispatch({
-                        type: UPDATE_PERMISSION,
+                        type: constants.UPDATE_PERMISSION,
                         data: resp
                     })
                 },
@@ -48,7 +48,7 @@ export default {
                 type: 'POST',
                 success: (resp) => {
                     dispatch({
-                        type: CREATE_PERMISSION,
+                        type: constants.CREATE_PERMISSION,
                         data: resp
                     })
                 },

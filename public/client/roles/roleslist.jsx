@@ -1,6 +1,8 @@
 import React, {Component} from 'react';
 import reactable from 'reactable';
 import {  withRouter  } from 'react-router';
+import ErrorComponent from '../errors/error';
+import LoaderComponent from '../core/loader';
 var Table = reactable.Table;
 var Tr = reactable.Tr;
 var Td = reactable.Td;
@@ -32,7 +34,7 @@ class Roleslist extends Component {
 
  render() {
         let self = this;
-        return  (
+        return  this.props.showLoader ? <LoaderComponent /> :(
                 <div>               
                     <div className="profile-list-container">
                         <p>List of roles</p>
@@ -53,6 +55,8 @@ class Roleslist extends Component {
                             </Table>
                         </div>
                         <p className="create-role-container"><button onClick={this.handleClickCreateRole}>Create Role</button></p>
+
+                         <ErrorComponent message={this.props.errors} />  
                     </div>
         );
                     

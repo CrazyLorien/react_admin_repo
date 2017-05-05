@@ -1,39 +1,60 @@
 import utils from '../utils/utils';
 
-export default function users(state = { usersList: [] }, action) {
+export default function users(state = { usersList: [], showReload: true }, action) {
     switch (action.type) {
-    case 'RECEIVE_ALL':
+    case 'RECEIVE_ALL_START':
+        {
+            return Object.assign({}, { usersList: state.usersList, showReload: true });
+        }
+    case 'RECEIVE_ALL_SUCCESS':
         {
             let users = action.data.concat();
-            return Object.assign({}, { usersList: users });
+            return Object.assign({}, { usersList: users }, { showReload: false });
         }
-    case 'GET_ALL':
+    case 'GET_BY_NAME_START':
+    case 'UPDATE_USER_START':
         {
-            return state;
+            return Object.assign({}, { usersList: state.usersList, editedUser: state.editedUser }, { showReload: true });
         }
-    case 'GET_BY_NAME':
-    case 'UPDATE_USER':
+    case 'GET_BY_NAME_SUCCESS':
+    case 'UPDATE_USER_SUCCESS':
         {
             let users = state.usersList.filter(x => x._id !== action.data._id).concat(action.data);
-            return Object.assign({}, { usersList: users, editedUser: action.data });
-
+            return Object.assign({}, { usersList: users, editedUser: action.data, showReload: false });
         }
-    case 'CREATE_USER':
+    case 'CREATE_USER_START':
+        {
+            return Object.assign({}, { usersList: state.usersList, editedUser: state.editedUser, showReload: true });
+        }
+    case 'CREATE_USER_SUCCESS':
         {
             let users = state.usersList.concat(action.data);
-            return Object.assign({}, { usersList: users, editedUser: action.data });
-
+            return Object.assign({}, { usersList: users, editedUser: action.data, showReload: false });
         }
-    case 'GET_USER_BY_ID':
+    case 'GET_USER_BY_ID_START':
         {
-            let users = state.usersList.filter(x => x._id !== action.data._id).concat(action.data);
-            let user = users.filter(x => x._id === action.data._id)[0];
-            if (!user)
-                user = {
+            return Object.assign({}, {
+                usersList: state.usersList,
+                editedUser: state.editedUser || {
                     Roles: [],
                     Images: []
-                };
-            return Object.assign({}, { usersList: state.usersList, editedUser: user });
+                },
+                showReload: true
+            });
+        }
+    case 'GET_USER_BY_ID_SUCCESS':
+        {
+            let users = state.usersList;
+            let user = {
+                Roles: [],
+                Images: []
+            };
+            if (action.data !== undefined) { //user creation
+                users = state.usersList.filter(x => x._id !== action.data._id).concat(action.data);
+                user = users.filter(x => x._id === action.data._id)[0];
+            }
+
+            return Object.assign({}, { usersList: users, editedUser: user, showReload: false });
         }
     case 'CLEAR_EDITED_USER':
         {
@@ -42,6 +63,10 @@ export default function users(state = { usersList: [] }, action) {
                 Images: []
             };
             return Object.assign({}, { usersList: state.usersList, editedUser: user });
+        }
+    case 'GET_USER_BY_ID_FAIL':
+        {
+            return Object.assign({}, { rolesList: state.usersList, editedRole: state.editedUser, showReload: false });
         }
     default:
         return state;

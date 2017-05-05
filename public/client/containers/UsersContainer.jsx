@@ -19,7 +19,7 @@ class UsersContainer extends Component {
 
     render() {
         return (
-            <ProfileList users={this.props.users} clearUser={this.props.clearEditedUser}/>
+            <ProfileList users={this.props.users} clearUser={this.props.clearEditedUser} errors={ this.props.errors} showLoader={this.props.showLoader} />
         );
     }
 }
@@ -28,7 +28,9 @@ class UsersContainer extends Component {
 
 export default connect((state) => {
     return {
-        users : state.users.usersList
+        users : state.users.usersList,
+        errors: state.errors.errorsList,
+        showLoader: state.users.showReload
     }
 }, function (dispatch) {
     return {

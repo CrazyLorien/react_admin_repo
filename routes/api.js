@@ -33,6 +33,10 @@ router.get('/users/:id', function (req, res, next) {
     query.exec();
 
     query.then(function (user) {
+        if (req.params.id == 'undefined') {
+            next(new Error("Wrong id"))
+        }
+
         res.json(user);
     })
 });
@@ -77,11 +81,14 @@ router.get('/roles', function (req, res, next) {
 router.get('/roles/:id', function (req, res, next) {
     var query = Role.findOne({ _id: req.params.id });
 
-    query.exec();
-
-    query.then(function (role) {
+    query.exec(function (err, role) {
+        if (req.params.id == 'undefined') {
+            next(new Error("Wrong id"))
+        }
         res.json(role);
-    })
+    });
+
+
 });
 
 router.post('/roles/create', function (req, res, next) {

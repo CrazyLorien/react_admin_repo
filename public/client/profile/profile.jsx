@@ -4,6 +4,7 @@ import usersAction  from '../action/user';
 import { Router, Route, Link, browserHistory } from 'react-router';
 import RolesContainer from '../containers/RolesContainer';
 import Validator from '../core/validator';
+import LoaderComponent from '../core/loader';
 
 class Profile extends Component {
     constructor(){
@@ -26,7 +27,8 @@ class Profile extends Component {
                 message : "",
                 name : this.props.user.name,
                 password : this.props.user.password,
-                Roles: this.props.user.Roles
+                Roles: this.props.user.Roles,
+                canSubmit: true
             });
      }
     }
@@ -37,7 +39,8 @@ class Profile extends Component {
                 message : "",
                 name : props.user.name,
                 password : props.user.password,
-                Roles: props.user.Roles
+                Roles: props.user.Roles,
+                canSubmit: true
             });
     }
 
@@ -106,11 +109,19 @@ class Profile extends Component {
         return newRoles.concat(roles);
     }
 
+    clearAll =  () => {
+        this.setState( { canSubmit : true});
+    }
+
+    setClientErrors = () => {
+        this.setState ({ canSubmit : false}) 
+    }
+
    
     render() {
         let isAdmin = this.state.Roles ? this.state.Roles.filter( (role) => { return role.name.indexOf('Admin') > -1 }).length > 0 : false;
         let isCurrentUser = this.props.isCurrentUser;
-        return (<div className="container">
+        return (this.props.showLoader && this.props.user === undefined) ? <LoaderComponent /> : (<div className="container">
             Admin profile
             <div className="row" >
                 <form className="col s12" onSubmit={this.handleSubmit} >
@@ -136,11 +147,11 @@ class Profile extends Component {
                     <div>
                             <Validator data={ [{ "name": this.state.name, "propname": "name", validationRule: ['require']}, 
                             { "name" : this.state.password,  "propname": "password", validationRule: ['require'] } ] } 
-                            setClientErrors={ this.props.setClientErrors} canSubmit={this.props.canSubmit} clearAll = { this.props.clearAll}/> 
+                            setClientErrors={ this.setClientErrors} clearAll = { this.clearAll}  canSubmit={ this.state.canSubmit}/> 
                    </div> 
 
                     {
-                        !this.props.canSubmit 
+                        this.state.canSubmit 
                             ? 
                                 (<div className="s12">
                                     <button className="btn waves-effect" >Save</button>
@@ -162,7 +173,7 @@ class Profile extends Component {
                 )}
 
             {            
-            (!this.props.canSubmit ) ? (
+            (this.state.canSubmit ) ? (
                     <RolesContainer selectRole={ this.selectRole } userRoles={ this.state.Roles } getById = { this.props.getById } />
                 ) : (<div></div>)
 

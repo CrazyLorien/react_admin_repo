@@ -1,6 +1,9 @@
 import React, {Component} from 'react';
 import reactable from 'reactable';
 import {  withRouter  } from 'react-router';
+import ErrorComponent from '../errors/error';
+import LoaderComponent from '../core/loader';
+
 var Table = reactable.Table;
 var Tr = reactable.Tr;
 var Td = reactable.Td;
@@ -32,7 +35,7 @@ class ProfileList extends Component {
 
  render() {
         let self = this;
-        return  (
+        return  this.props.showLoader ? <LoaderComponent /> : (
                 <div>               
                     <div className="profile-list-container">
                     <p>List of users</p>
@@ -56,8 +59,10 @@ class ProfileList extends Component {
                     <div className="s12 create-usr-btn-container">                                   
                             <button className="btn waves-effect" onClick={this.handleCreateClick}>Create user</button>
                     </div>
+
+                    <ErrorComponent message={this.props.errors} />                                   
                 </div>
-        );
+        )
                     
     }
 }

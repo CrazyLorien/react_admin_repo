@@ -74,30 +74,17 @@ app.all('*', function (req, res, next) {
 
 app.use(express.static(__dirname + '/public'));
 
-// development error handler
-// will print stacktrace
-if (app.get('env') === 'development') {
-    app.use(function (err, req, res, next) {
-        try {
-            res.status(err.status || 500);
-            res.json('error', {
-                message: err.message || err.info,
-                error: err
-            });
-        } catch (ERR) {
 
-        }
-    });
-}
-
-// production error handler
-// no stacktraces leaked to user
 app.use(function (err, req, res, next) {
-    res.status(err.status || 500).
-    json('error', {
-        message: err.message || err.info,
-        error: {}
-    });
+    try {
+        res.status(err.status || 500).send({
+            message: err.message || err.info,
+            error: err
+        });
+    } catch (ERR) {
+
+    }
 });
+
 
 module.exports = app;

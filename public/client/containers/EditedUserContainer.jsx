@@ -15,7 +15,7 @@ class EditedUserContainer extends Component {
         if(this.props.editedUser === undefined && this.props.params.userid)  {              
             this.props.getById(this.props.params.userid);   
         }
-        else if(this.props.editedUser._id !== this.props.params.userid)
+        else if(this.props.editedUser !== undefined && this.props.editedUser._id !== this.props.params.userid)
         {
             this.props.getById(this.props.params.userid);
         }
@@ -28,11 +28,11 @@ class EditedUserContainer extends Component {
     componentWillReceiveProps(props){ 
         if(props.editedUser === undefined && this.props.params.userid){            
             this.props.getById(this.props.params.userid); 
-        }else if(props.editedUser._id !== this.props.params.userid)
+        }else if(props.editedUser !== undefined && props.editedUser._id !== this.props.params.userid)
         {
             this.props.getById(this.props.params.userid);
         }
-        else if(props.editedUser._id !== undefined && !this.props.params.userid){
+        else if(props.editedUser !== undefined && props.editedUser._id !== undefined && !this.props.params.userid){
            this.props.router.push(`/adminprofile/edituserprofile/${props.editedUser._id}`); 
         }
   
@@ -42,8 +42,7 @@ class EditedUserContainer extends Component {
     render() {
         return (
              <Profile user={this.props.editedUser} updateUser = {this.props.updateUser} createUser={this.props.createUser} 
-                      isCurrentUser = { false } canSubmit={ this.props.clienterrors }
-                      setClientErrors ={ this.props.setClientErrors}  clearAll={ this.props.clearAll} />
+                      isCurrentUser = { false } showLoader={ this.props.showLoader} errors={ this.props.errors} />
         );
     }
 }
@@ -52,7 +51,8 @@ export default withRouter(connect((state) => {
     return {
         users: state.users.usersList,
         editedUser : state.users.editedUser,
-        clienterrors: state.errors.clientErrorsExistance
+        showLoader: state.users.showReload,
+        errors: state.errors.errorsList,
     }
 }, function (dispatch) {
     return {
@@ -70,10 +70,7 @@ export default withRouter(connect((state) => {
         },
         setClientErrors: () => {
             dispatch(errorsAction.SET_CLIENT_VALIDATION_ERRORS())
-        },
-        clearAll: () => {
-            dispatch(errorsAction.CLEAR_ALL())
         }
-       
+
     }
 })(EditedUserContainer))

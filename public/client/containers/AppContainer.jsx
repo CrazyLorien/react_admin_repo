@@ -8,14 +8,14 @@ import errorsAction from '../action/error';
 class AppContainer extends Component {
     componentDidMount(){
         let authUser = AuthService.getAuthUser();
-        if(this.props.users.usersList.length <=0 ){
+        if(this.props.users.length <=0 ){
             this.props.getByName(authUser.name);
         }
     }
 
     componentWillReceiveProps(props){
         let authUser = AuthService.getAuthUser();
-        if(props.users.usersList.length  <= 0 ){
+        if(props.users.length  <= 0 ){
             this.props.getByName(authUser.name);
         }
     }
@@ -23,10 +23,10 @@ class AppContainer extends Component {
     render() {
         let authUser = AuthService.getAuthUser();
         if(authUser){
-            let user = this.props.users.usersList.filter( (usr) => usr.name === authUser.name)[0]
+            let user = this.props.users.filter( (usr) => usr.name === authUser.name)[0]
             return (
                 <Profile user={user} updateUser = {this.props.UpdateUser} errors={this.props.errors} canSubmit={ this.props.clienterrors }
-                      setClientErrors ={ this.props.setClientErrors}  clearAll={ this.props.clearAll}  />
+                      setClientErrors ={ this.props.setClientErrors}  clearAll={ this.props.clearAll}  showLoader={this.props.showLoader} />
             );
         }
     }
@@ -36,9 +36,10 @@ class AppContainer extends Component {
 
 export default connect((state) => {
     return {
-        users : state.users,
+        users : state.users.usersList,
         errors: state.errors.errorsList,
-        clienterrors: state.errors.clientErrorsExistance
+        clienterrors: state.errors.clientErrorsExistance,
+        showLoader: state.users.showReload
     }
 }, function (dispatch) {
     return {
