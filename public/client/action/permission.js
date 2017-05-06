@@ -4,16 +4,12 @@ import constants from '../core/constants';
 export default {
     RECEIVE_ALL_PERMISSIONS: function () {
         return (dispatch) => {
-            $.get(permissionsUrl).then(
-                (resp) => {
-                    dispatch({
-                        type: constants.RECEIVE_ALL_PERMISSIONS,
-                        data: resp
-                    })
-
-                }
-            );
-        };
+            dispatch({
+                type: constants.RECEIVE_ALL_PERMISSIONS,
+                apiPath: permissionsUrl,
+                reqType: 'GET'
+            });
+        }
     },
     GET_PERMISSION_BY_ID: function (id) {
         return (dispatch) => {
@@ -25,35 +21,21 @@ export default {
     },
     UPDATE_PERMISSION: function (pm) {
         return (dispatch) => {
-
-            $.ajax({
-                url: `${permissionsUrl}/${pm.id}/update`,
-                type: 'PUT',
-                success: (resp) => {
-                    dispatch({
-                        type: constants.UPDATE_PERMISSION,
-                        data: resp
-                    })
-                },
-                data: JSON.stringify(pm),
-                contentType: 'application/json;charset=utf-8'
+            dispatch({
+                type: constants.UPDATE_PERMISSION,
+                apiPath: `${permissionsUrl}/${pm.id}/update`,
+                reqType: 'PUT',
+                data: pm
             });
         }
     },
     CREATE_PERMISSION: function (pm) {
         return (dispatch) => {
-
-            $.ajax({
-                url: `${permissionsUrl}/create`,
-                type: 'POST',
-                success: (resp) => {
-                    dispatch({
-                        type: constants.CREATE_PERMISSION,
-                        data: resp
-                    })
-                },
-                data: JSON.stringify(pm),
-                contentType: 'application/json;charset=utf-8'
+            dispatch({
+                type: constants.CREATE_PERMISSION,
+                apiPath: `${permissionsUrl}/create`,
+                reqType: 'POST',
+                data: pm
             });
         }
     }

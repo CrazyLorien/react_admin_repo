@@ -17,7 +17,7 @@ export default class Constants {
     static GET_ALL = 'GET_ALL';
     static RECEIVE_ALL = 'RECEIVE_ALL';
     static RECEIVE_ALL_START = 'RECEIVE_ALL_START';
-    static RECEIVE_ALL_SUCCESS = 'RECEIVE_ALL_SUCCESS';
+
 
     static GET_BY_NAME = 'GET_BY_NAME';
     static GET_USER_BY_ID = 'GET_USER_BY_ID';
@@ -28,4 +28,10 @@ export default class Constants {
     static START = 'START';
     static END = 'END';
     static FAILS = 'FAILS';
+
+    static RECEIVE_ALL_SUCCESS = 'RECEIVE_ALL_SUCCESS';
+    static GET_BY_NAME_SUCCESS = 'GET_BY_NAME_SUCCESS';
+    static GET_BY_ID_SUCCESS = 'GET_BY_NAME_SUCCESS';
+    static UPDATE_USER_SUCCESS = 'UPDATE_USER_SUCCESS';
+    static CREATE_USER_SUCCESS = 'CREATE_USER_SUCCESS';
 }

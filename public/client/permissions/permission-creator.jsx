@@ -3,7 +3,7 @@ import Validator from '../core/validator';
 
 
 class PermissionsCreator extends Component {
-    state = {  }
+    state = { canSubmit: true }
     constructor(props){
         super(props)
         this.state = {
@@ -52,6 +52,14 @@ class PermissionsCreator extends Component {
             
     }
 
+    clearAll =  () => {
+        this.setState( { canSubmit : true});
+    }
+
+    setClientErrors = () => {
+        this.setState ({ canSubmit : false}) 
+    }
+
     render() {
         let pm = this.props.permission;
         return (this.props.permission !== undefined || this.state.id !== undefined) ? (                 
@@ -69,10 +77,10 @@ class PermissionsCreator extends Component {
                                     </div>
                             </div>
                             <Validator data={ [{ "name": this.state.name || "", "propname": "permission name", validationRule: ['require']} ] } 
-                            setClientErrors={ this.props.setClientErrors} canSubmit={this.props.canSubmit} clearAll = { this.props.clearAll}/> 
+                            setClientErrors={ this.setClientErrors} canSubmit={this.state.canSubmit} clearAll = { this.clearAll}/> 
                         </form>
                         {
-                        !this.props.canSubmit 
+                        this.state.canSubmit 
                             ?
                                 (<div className="s12">                                   
                                     <button className="btn waves-effect" onClick={this.handleSubmit}>Save</button>
