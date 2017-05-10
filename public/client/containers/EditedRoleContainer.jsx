@@ -46,7 +46,7 @@ class EditedRoleContainer extends Component {
         }
 
 
-        if(props.permissions.length <= 0){
+        if(this.props.permissions.length < props.permissions.length){
            this.props.getAllPermissions();
         }
     }

@@ -68,3 +68,4 @@ class ProfileList extends Component {
 }
 
 export default withRouter(ProfileList)
+export { ProfileList }; 

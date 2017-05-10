@@ -12,11 +12,10 @@ const ajaxMiddleware = store => next => action => {
         url: `${action.apiPath}`,
         type: action.reqType,
         success: (resp) => {
-            setTimeout(
-                store.dispatch.bind(null, {
-                    type: action.type + '_SUCCESS',
-                    data: resp
-                }), 1000);
+            store.dispatch({
+                type: action.type + '_SUCCESS',
+                data: resp
+            })
         },
         error: (resp) => {
             store.dispatch({

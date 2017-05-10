@@ -25,7 +25,6 @@ describe('users', () => {
             type: constants.GET_BY_NAME_SUCCESS,
             data: [{ _id: 0, name: 'third' }]
         });
-        console.log(store.getState().users.usersList);
         expect(store.getState().users.usersList.length).toBeGreaterThan(0)
     });
 });
@@ -37,7 +36,6 @@ describe('users', () => {
             type: constants.GET_BY_ID_SUCCESS,
             data: [{ _id: 0, name: 'third' }]
         });
-        console.log(store.getState().users.usersList);
         expect(store.getState().users.usersList.length).toBeGreaterThan(0)
     });
 });

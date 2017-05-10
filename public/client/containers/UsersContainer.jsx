@@ -1,5 +1,5 @@
 import React, {Component} from 'react';
-import ProfileList from "../profile/profilelist";
+import  ProfileList   from "../profile/profilelist";
 import { connect, dispatch } from 'react-redux';
 import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';

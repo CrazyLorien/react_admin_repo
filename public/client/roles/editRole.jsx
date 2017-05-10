@@ -15,6 +15,24 @@ class ChooseRolesPermissions extends Component {
         this.setState({ role : role});
     }
 
+     //lifecycle hooks
+    componentDidMount(){
+        if(this.props.role !== undefined){     
+            this.setState({
+                role: this.props.role,
+                canSubmit: true
+            });
+        }
+    }
+
+    componentWillReceiveProps(props){
+        if(props.role !== undefined)     
+            this.setState({
+                role: this.props.role,
+                canSubmit: true
+            });
+    }
+
     handlePermissionsChange = (permission) => {
         //check is this permission
         var count = this.props.role.Permissions.filter( (pm) => {
@@ -47,7 +65,7 @@ class ChooseRolesPermissions extends Component {
     }
    
     render() {
-        return (this.props.role !== undefined && !this.props.showLoader) ? (
+        return (this.props.role !== undefined) ? (
                     <div className="roles-permissions-container">
                         <p>List of role's permissions</p>
                         {

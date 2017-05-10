@@ -30,8 +30,6 @@ class Permissionslist extends Component {
 
   }
 
-
-
  render() {
         let self = this;
         return  (
