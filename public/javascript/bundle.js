@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "67aa32f0335d24b66523"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "6752e9706b3c6baaea34"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32079,7 +32079,7 @@
 	        value: function render() {
 	            var _this2 = this;
 	
-	            return this.props.roles != undefined && this.props.userRoles != undefined ? _react2.default.createElement(
+	            return this.props.roles != undefined && this.props.userRoles != undefined && this.props.user._id ? _react2.default.createElement(
 	                "div",
 	                { className: "user-roles-container" },
 	                _react2.default.createElement(
@@ -33128,9 +33128,7 @@
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
 	            //here we get user by id from server
-	            if (!this.props.editedUser) {
-	                this.props.getById(this.props.params.userid);
-	            }
+	            this.props.getById(this.props.params.userid);
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
@@ -33146,8 +33144,9 @@
 	            if (this.props.editedUser) {
 	                return _react2.default.createElement(_profile2.default, { user: this.props.editedUser,
 	                    updateClientUser: this.props.updateClientUser,
-	                    updateUser: this.props.UpdateUser,
+	                    updateUser: this.props.updateUser,
 	                    errors: this.props.errors,
+	                    createUser: this.props.createUser,
 	                    canSubmit: this.props.clienterrors,
 	                    setClientErrors: this.props.setClientErrors,
 	                    clearAll: this.props.clearAll,

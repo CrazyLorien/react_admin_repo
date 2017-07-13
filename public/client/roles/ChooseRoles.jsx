@@ -46,7 +46,7 @@ class ChooseRoles extends Component {
    
     render() {
         return (this.props.roles != undefined
-                && this.props.userRoles != undefined
+                && this.props.userRoles != undefined && this.props.user._id
                 ) ? (
                     <div className="user-roles-container">
                         <p>List of user's roles</p>

@@ -14,9 +14,8 @@ class EditedUserContainer extends Component {
 
     componentWillMount(){
       //here we get user by id from server
-      if(!this.props.editedUser){
-          this.props.getById(this.props.params.userid);
-      } 
+      this.props.getById(this.props.params.userid);
+
     }
 
     componentWillReceiveProps(props){
@@ -32,8 +31,9 @@ class EditedUserContainer extends Component {
             return (
                 <Profile  user={this.props.editedUser} 
                             updateClientUser= { this.props.updateClientUser }
-                            updateUser = {this.props.UpdateUser}
+                            updateUser = {this.props.updateUser}
                             errors={this.props.errors} 
+                            createUser = { this.props.createUser }
                             canSubmit={ this.props.clienterrors }
                             setClientErrors ={ this.props.setClientErrors} 
                             clearAll={ this.props.clearAll}
