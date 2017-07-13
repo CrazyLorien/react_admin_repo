@@ -9,56 +9,26 @@ import LoaderComponent from '../core/loader';
 class Profile extends Component {
     constructor(){
         super();
-        this.state = {
-            message : "",
-            canSubmit: true
-        };
 
         this.handleChange = this.handleChange.bind(this);
-        this.handleSubmit = this.handleSubmit.bind(this);
-        this.selectRole = this.selectRole.bind(this);
-        
-    }
-
-    //lifecycle hooks
-    componentDidMount(){
-        if(this.props.user !== undefined){     
-            this.setState({
-                message : "",
-                name : this.props.user.name,
-                password : this.props.user.password,
-                Roles: this.props.user.Roles,
-                canSubmit: true
-            });
-     }
-    }
-
-    componentWillReceiveProps(props){
-        if(props.user !== undefined)     
-            this.setState({
-                message : "",
-                name : props.user.name,
-                password : props.user.password,
-                Roles: props.user.Roles,
-                canSubmit: true
-            });
+        this.handleSubmit = this.handleSubmit.bind(this);      
     }
 
     // event handlers
      handleChange(event) {
         const name = event.target.name;
-        this.setState({ [name]: event.target.value});
-
+        this.props.user[name] = event.target.value;
+        this.props.updateClientUser(this.props.user);
     }
 
     handleSubmit(event) {
         event.preventDefault();
         let user = {
             id: this.props.user ? this.props.user._id : undefined,
-            name: this.state.name,
-            password: this.state.password,
-            Images: [this.state.avatar],
-            Roles: this.state.Roles
+            name: this.props.user.name || '',
+            password: this.props.user.password || '',
+            Images: [this.props.user.avatar || ''],
+            Roles: this.props.user.Roles
         }
 
         if(user.id)
@@ -67,59 +37,19 @@ class Profile extends Component {
             this.props.createUser(user)
     }
 
-    selectRole(role){ 
-       if(!role.name)  
-            return;
-       let Roles  = this.checkRoles(this.state.Roles, role) 
-       let user = {
-            id: this.props.user ? this.props.user._id : undefined,
-            name: this.state.name,
-            password: this.state.password,
-            Roles: this.state.Roles
-        }
-
-        user.Roles = Roles;
-
-        if(user.id)
-            this.props.updateUser(user);
-        else
-            this.props.createUser(user)
-    }
-
-    checkRoles(roles, role){
-        let newRoles = [];
-        let index = -1;
-        var count = roles.filter((ur, ind) => { 
-            if(ur.name !== role.name){
-                return ur;
-            }
-            else{
-                index = ind;
-            }
-        });
-
-        if(count.length === roles.length)
-        {
-            roles.push(role)
-        }
-        else{
-            roles.splice(index, 1);
-        }
-
-        return newRoles.concat(roles);
-    }
+   
 
     clearAll =  () => {
-        this.setState( { canSubmit : true});
+        //this.setState( { canSubmit : true});
     }
 
     setClientErrors = () => {
-        this.setState ({ canSubmit : false}) 
+       //this.setState ({ canSubmit : false}) 
     }
 
    
     render() {
-        let isAdmin = this.state.Roles ? this.state.Roles.filter( (role) => { return role.name.indexOf('Admin') > -1 }).length > 0 : false;
+        let isAdmin = this.props.user.Roles ? this.props.user.Roles.filter( (role) => { return role.name.indexOf('Admin') > -1 }).length > 0 : false;
         let isCurrentUser = this.props.isCurrentUser;
         return (this.props.showLoader && this.props.user === undefined) ? <LoaderComponent /> : (<div className="container">
             Admin profile
@@ -131,7 +61,7 @@ class Profile extends Component {
                         </div>
 
                         <div className="input-field col s11">
-                            <input id="Name" type="text" className="validate" name="name" value={this.state.name} onChange={this.handleChange}/>
+                            <input id="Name" type="text" className="validate" name="name" value={this.props.user.name} onChange={this.handleChange}/>
                         </div>                     
                         
                     </div>
@@ -140,18 +70,18 @@ class Profile extends Component {
                             <label htmlFor="password">Password</label>
                         </div>
                         <div className="input-field col s11">
-                            <input id="password" type="password" className="validate" name="password" value={this.state.password} onChange={this.handleChange}/>
+                            <input id="password" type="password" className="validate" name="password" value={this.props.user.password} onChange={this.handleChange}/>
                         </div>
                     </div>
 
                     <div>
-                            <Validator data={ [{ "name": this.state.name, "propname": "name", validationRule: ['require']}, 
-                            { "name" : this.state.password,  "propname": "password", validationRule: ['require'] } ] } 
-                            setClientErrors={ this.setClientErrors} clearAll = { this.clearAll}  canSubmit={ this.state.canSubmit}/> 
+                            <Validator data={ [{ name: this.props.user.name, propname: 'name', validationRule: ['require']}, 
+                            { name : this.props.user.password,  propname: 'password', validationRule: ['require'] } ] } 
+                            setClientErrors={ this.setClientErrors} clearAll = { this.clearAll}  canSubmit={ this.props.canSubmit} /> 
                    </div> 
 
                     {
-                        this.state.canSubmit 
+                        !this.props.canSubmit 
                             ? 
                                 (<div className="s12">
                                     <button className="btn waves-effect" >Save</button>
@@ -173,8 +103,11 @@ class Profile extends Component {
                 )}
 
             {            
-            (this.state.canSubmit ) ? (
-                    <RolesContainer selectRole={ this.selectRole } userRoles={ this.state.Roles } getById = { this.props.getById } />
+            (!this.props.canSubmit ) ? (
+                    <RolesContainer updateClientUser = { this.props.updateClientUser}
+                                    user = {this.props.user }                                
+                                    userRoles={ this.props.user.Roles }
+                                    getById = { this.props.getById } />
                 ) : (<div></div>)
 
             }

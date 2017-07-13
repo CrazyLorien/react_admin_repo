@@ -12,31 +12,29 @@ class EditedUserContainer extends Component {
     }
 
     componentDidMount(){ 
-        if(this.props.editedUser === undefined && this.props.params.userid)  {              
-            this.props.getById(this.props.params.userid);   
-        }
-        else if(this.props.editedUser !== undefined && this.props.editedUser._id !== this.props.params.userid)
-        {
-            this.props.getById(this.props.params.userid);
-        }
-        else if(!this.props.params.userid){
-            this.props.setClientErrors();
-            this.props.getById();
-        }
+        // if(this.props.editedUser === undefined && this.props.params.userid)  {              
+        //     this.props.getById(this.props.params.userid);   
+        // }
+        // else if(this.props.editedUser !== undefined && this.props.editedUser._id !== this.props.params.userid)
+        // {
+        //     this.props.getById(this.props.params.userid);
+        // }
+        // else if(!this.props.params.userid){
+        //     this.props.setClientErrors();
+        //     this.props.getById();
+        // }
     }
 
     componentWillReceiveProps(props){ 
-        if(props.editedUser === undefined && this.props.params.userid){            
-            this.props.getById(this.props.params.userid); 
-        }else if(props.editedUser !== undefined && props.editedUser._id !== this.props.params.userid)
-        {
-            this.props.getById(this.props.params.userid);
-        }
-        else if(props.editedUser !== undefined && props.editedUser._id !== undefined && !this.props.params.userid){
-           this.props.router.push(`/adminprofile/edituserprofile/${props.editedUser._id}`); 
-        }
-  
-           
+        // if(props.editedUser === undefined && this.props.params.userid){            
+        //     this.props.getById(this.props.params.userid); 
+        // }else if(props.editedUser !== undefined && props.editedUser._id !== this.props.params.userid)
+        // {
+        //     this.props.getById(this.props.params.userid);
+        // }
+        // else if(props.editedUser !== undefined && props.editedUser._id !== undefined && !this.props.params.userid){
+        //    this.props.router.push(`/adminprofile/edituserprofile/${props.editedUser._id}`); 
+        // }        
     }
 
     render() {

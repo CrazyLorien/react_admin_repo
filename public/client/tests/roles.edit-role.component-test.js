@@ -30,13 +30,13 @@ function setupCreate() {
     }
 
 
-    function setupEdit() {
+    function setupEdit(showLoader) {
 
         let props = {
             role: { _id: 1, name: 'testRole', Permissions: [] },
             updateRole: () => { console.log('UpdateRole') },
             createRole: () => { console.log('CreateRole') },
-            showLoader: false,
+            showLoader: showLoader,
             errors: [],
             permissions: []
         }
@@ -106,10 +106,19 @@ function setupCreate() {
 
                 describe('Test edit role componnet', () => {
                     it('should display loader if loader is false but role is undefined ', () => {
-                        const { enzymeWrapper } = setupLoader()
+                        const { enzymeWrapper } = setupLoader(false)
                             //check 
                         console.log(enzymeWrapper.find)
-                        expect(enzymeWrapper.find('div.loader')).to.have.length(1);
+                        expect(enzymeWrapper.find('div.loader').length).toBe(1)
+                    })
+                })
+
+                describe('Test edit role componnet', () => {
+                    it('should display loader if loader is false but role is undefined ', () => {
+                        const { enzymeWrapper } = setupLoader(true)
+                            //check 
+                        console.log(enzymeWrapper.find)
+                        expect(enzymeWrapper.find('div.loader').length).toBe(1)
                     })
                 })
             })

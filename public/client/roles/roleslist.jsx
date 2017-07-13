@@ -64,3 +64,4 @@ class Roleslist extends Component {
 }
 
 export default withRouter(Roleslist)
+export { Roleslist }; 

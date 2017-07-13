@@ -12,25 +12,15 @@ class ChooseRolesPermissions extends Component {
     handleChange = (event) => {
         let role = {};
         role.name = event.target.value;
-        this.setState({ role : role});
     }
 
      //lifecycle hooks
     componentDidMount(){
-        if(this.props.role !== undefined){     
-            this.setState({
-                role: this.props.role,
-                canSubmit: true
-            });
-        }
+       
     }
 
     componentWillReceiveProps(props){
-        if(props.role !== undefined)     
-            this.setState({
-                role: this.props.role,
-                canSubmit: true
-            });
+        
     }
 
     handlePermissionsChange = (permission) => {

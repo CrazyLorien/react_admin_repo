@@ -23,7 +23,12 @@ class RolesContainer extends Component {
 
     render() {
         return (
-           <ChooseRoles roles={ this.props.roles } userRoles = { this.props.userRoles } handleCheck={this.props.selectRole }/>
+           <ChooseRoles 
+                    user = { this.props.user}
+                    roles={ this.props.roles }
+                    userRoles = { this.props.userRoles }
+                    updateClientUser =  { this.props.updateClientUser }
+                    />
         );
     }
 }

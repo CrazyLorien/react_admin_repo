@@ -2,7 +2,7 @@ let usersUrl = '/api/users';
 import constants from '../core/constants';
 
 export default {
-    RECEIVE_ALL: function () {
+    RECEIVE_ALL: function() {
         return (dispatch) => {
             dispatch({
                 type: constants.RECEIVE_ALL,
@@ -11,7 +11,7 @@ export default {
             });
         }
     },
-    GET_BY_NAME: function (name) {
+    GET_BY_NAME: function(name) {
         return (dispatch) => {
             dispatch({
                 type: constants.GET_BY_NAME,
@@ -20,7 +20,7 @@ export default {
             });
         };
     },
-    GET_USER_BY_ID: function (id) {
+    GET_USER_BY_ID: function(id) {
         return (dispatch) => {
             dispatch({
                 type: constants.GET_USER_BY_ID,
@@ -29,7 +29,7 @@ export default {
             });
         }
     },
-    UPDATE_USER: function (user) {
+    UPDATE_USER: function(user) {
         return (dispatch) => {
             dispatch({
                 type: constants.UPDATE_USER,
@@ -39,7 +39,7 @@ export default {
             });
         }
     },
-    CREATE_USER: function (user) {
+    CREATE_USER: function(user) {
         return (dispatch) => {
             dispatch({
                 type: constants.CREATE_USER,
@@ -49,11 +49,19 @@ export default {
             });
         }
     },
-    CLEAR_EDITED_USER: function () {
+    CLEAR_EDITED_USER: function() {
         return (dispatch) => {
             dispatch({
                 type: constants.CLEAR_EDITED_USER,
                 data: null
+            })
+        }
+    },
+    UPDATE_CLIENT_USER: function(user) {
+        return (dispatch) => {
+            dispatch({
+                type: constants.UPDATE_CLIENT_USER,
+                data: user
             })
         }
     }

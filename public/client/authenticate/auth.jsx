@@ -40,7 +40,7 @@ class AuthenticateComponent extends React.Component {
                 });
            }             
        }, (data) => {
-            this.setState(data.responseJSON);
+            this.setState(data.message);
        }); 
   }
 

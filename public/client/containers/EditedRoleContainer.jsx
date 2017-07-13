@@ -14,14 +14,10 @@ class EditedRoleContainer extends Component {
     }
 
     componentDidMount(){ 
-       if(this.props.editedRole === undefined && this.props.params.roleId)  {              
+        if(this.props.editedRole === undefined && this.props.params.roleId)  {              
             this.props.getById(this.props.params.roleId);   
         }
-        else if(this.props.editedRole !== undefined && this.props.editedRole._id !== this.props.params.roleId)
-        {
-            this.props.getById(this.props.params.roleId);
-        }
-        
+       
         else if(!this.props.params.roleId){
             this.props.setClientErrors();
             this.props.getById();
@@ -33,29 +29,21 @@ class EditedRoleContainer extends Component {
     }
 
      componentWillReceiveProps(props){
-        if(props.editedRole === undefined && this.props.params.roleId){            
-            this.props.getById(this.props.params.roleId); 
-        }
-        else if(this.props.editedRole !== undefined && this.props.editedRole._id !== this.props.params.roleId)
-        {
-            this.props.getById(this.props.params.roleId);
-        }
-        else if(props.editedRole._id !== undefined && !this.props.params.roleId){
+        if(props.editedRole._id !== undefined && !this.props.params.roleId){
            this.props.clearAll();
            this.props.router.push(`/adminprofile/editRole/${props.editedRole._id}`); 
-        }
-
-
-        if(this.props.permissions.length < props.permissions.length){
-           this.props.getAllPermissions();
         }
     }
 
     render() {
         return (
-             <EditedRole role={this.props.editedRole} updateRole = {this.props.updateRole} permissions= { this.props.permissions} createRole = { this.props.createRole} 
-             errors = { this.props.errors }  setClientErrors= {  this.props.setClientErrors} 
-             showLoader = { this.props.showLoader } />
+             <EditedRole role={this.props.editedRole} 
+                         updateRole = {this.props.updateRole} 
+                         permissions= { this.props.permissions} 
+                         createRole = { this.props.createRole} 
+                         errors = { this.props.errors }
+                         setClientErrors= { this.props.setClientErrors} 
+                         showLoader = { this.props.showLoader } />
         );
     }
 }

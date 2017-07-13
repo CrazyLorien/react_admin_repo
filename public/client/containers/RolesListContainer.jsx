@@ -23,7 +23,10 @@ class RolesListContainer extends Component {
 
     render() {
         return (
-           <RolesList roles={ this.props.roles }  clearRole={this.props.clearEditedRole} errors={ this.props.errors} showLoader={this.props.showLoader} />
+           <RolesList roles={ this.props.roles }
+                      clearRole={this.props.clearEditedRole}
+                      errors={ this.props.errors} 
+                      showLoader={this.props.showLoader} />
         );
     }
 }

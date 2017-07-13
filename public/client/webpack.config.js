@@ -4,13 +4,13 @@ const NODE_ENV = process.env.NODE_ENV || 'development',
 
 
 module.exports = {
-    context: path.join(__dirname, "./"),
+    context: path.join(__dirname, './'),
     entry: [
-        "./main.jsx"
+        './main.jsx'
     ],
     output: {
-        path: path.join(__dirname, "../javascript"),
-        filename: "bundle.js"
+        path: path.join(__dirname, '../javascript'),
+        filename: 'bundle.js'
     },
     devtool: '#inline-source-map',
     debug: true,
@@ -29,12 +29,12 @@ module.exports = {
                 test: /\.jsx?$/,
                 loaders: ['babel'],
                 exclude: /node_modules/,
-                include: path.join(__dirname, "./"),
-                presets: ["es2015", "react"]
+                include: path.join(__dirname, './'),
+                presets: ['es2015', 'react']
             },
             {
                 test: /\.css$/,
-                use: "style-loader!css-loader"
+                use: 'style-loader!css-loader'
             },
             {
                 test: /\.(png|jpg?g|gif|svg|ttf|eot|woff|woff2)$/,

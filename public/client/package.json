@@ -4,7 +4,7 @@
     "description": "",
     "scripts": {
         "start": "node server.js",
-        "build": "NODE_ENV=production webpack",
+        "build": "webpack -d --progress --colors --watch",
         "test": "mocha  --compilers js:./node_modules/babel-core/register  --require ./tests/setup.js tests"
     },
     "repository": {
