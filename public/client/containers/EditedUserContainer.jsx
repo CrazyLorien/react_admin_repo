@@ -5,43 +5,43 @@ import  usersAction  from '../action/user';
 import errorsAction from '../action/error';
 import AuthService from '../authenticate/auth-service';
 import { Router, Route, Link, withRouter  } from 'react-router';
+import LoaderComponent from '../core/loader';
 
 class EditedUserContainer extends Component {
     constructor(props){
         super(props);
     }
 
-    componentDidMount(){ 
-        // if(this.props.editedUser === undefined && this.props.params.userid)  {              
-        //     this.props.getById(this.props.params.userid);   
-        // }
-        // else if(this.props.editedUser !== undefined && this.props.editedUser._id !== this.props.params.userid)
-        // {
-        //     this.props.getById(this.props.params.userid);
-        // }
-        // else if(!this.props.params.userid){
-        //     this.props.setClientErrors();
-        //     this.props.getById();
-        // }
+    componentWillMount(){
+      //here we get user by id from server
+      if(!this.props.editedUser){
+          this.props.getById(this.props.params.userid);
+      } 
     }
 
-    componentWillReceiveProps(props){ 
-        // if(props.editedUser === undefined && this.props.params.userid){            
-        //     this.props.getById(this.props.params.userid); 
-        // }else if(props.editedUser !== undefined && props.editedUser._id !== this.props.params.userid)
-        // {
-        //     this.props.getById(this.props.params.userid);
-        // }
-        // else if(props.editedUser !== undefined && props.editedUser._id !== undefined && !this.props.params.userid){
-        //    this.props.router.push(`/adminprofile/edituserprofile/${props.editedUser._id}`); 
-        // }        
+    componentWillReceiveProps(props){
+        //get user from server after creation or update
+        if(!this.props.editedUser){
+          this.props.getById(this.props.params.userid);
+        } 
     }
+
 
     render() {
-        return (
-             <Profile user={this.props.editedUser} updateUser = {this.props.updateUser} createUser={this.props.createUser} 
-                      isCurrentUser = { false } showLoader={ this.props.showLoader} errors={ this.props.errors} />
-        );
+        if(this.props.editedUser){
+            return (
+                <Profile  user={this.props.editedUser} 
+                            updateClientUser= { this.props.updateClientUser }
+                            updateUser = {this.props.UpdateUser}
+                            errors={this.props.errors} 
+                            canSubmit={ this.props.clienterrors }
+                            setClientErrors ={ this.props.setClientErrors} 
+                            clearAll={ this.props.clearAll}
+                            showLoader={this.props.showLoader} />
+            );
+        }else{
+            return (<LoaderComponent />)
+        }
     }
 }
 
@@ -68,6 +68,9 @@ export default withRouter(connect((state) => {
         },
         setClientErrors: () => {
             dispatch(errorsAction.SET_CLIENT_VALIDATION_ERRORS())
+        },
+        updateClientUser: (user) => {
+            dispatch(usersAction.UPDATE_CLIENT_USER(user));
         }
 
     }

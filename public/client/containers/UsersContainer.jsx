@@ -5,16 +5,16 @@ import  usersAction  from '../action/user';
 import AuthService from '../authenticate/auth-service';
 
 class UsersContainer extends Component {
-    componentDidMount(){
+    componentWillMount(){
         if(this.props.users.length <= 1){
             this.props.getAll();
         }
     }
 
     componentWillReceiveProps(props){
-        if(props.users.length < this.props.users.length ){
-            this.props.getAll();
-        }
+        if(props.users !== null && this.props.users !== null)
+            if(props.users.length < this.props.users.length)
+                this.props.getAll();       
     }
 
     render() {

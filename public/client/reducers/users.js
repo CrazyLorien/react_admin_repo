@@ -33,14 +33,14 @@ export default function users(state = { usersList: [], showReload: true }, actio
             }
         case 'GET_USER_BY_ID_START':
             {
-                return Object.assign({}, {
+                return {...state,
                     usersList: state.usersList,
                     editedUser: state.editedUser || {
                         Roles: [],
                         Images: []
                     },
                     showReload: true
-                });
+                };
             }
         case 'GET_USER_BY_ID_SUCCESS':
             {

@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "1d63c75136f33ff1ed18"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "67aa32f0335d24b66523"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -32642,7 +32642,7 @@
 	            }
 	        case 'GET_USER_BY_ID_START':
 	            {
-	                return Object.assign({}, {
+	                return _extends({}, state, {
 	                    usersList: state.usersList,
 	                    editedUser: state.editedUser || {
 	                        Roles: [],
@@ -33026,8 +33026,8 @@
 	    }
 	
 	    _createClass(UsersContainer, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
 	            if (this.props.users.length <= 1) {
 	                this.props.getAll();
 	            }
@@ -33035,9 +33035,7 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            if (props.users.length < this.props.users.length) {
-	                this.props.getAll();
-	            }
+	            if (props.users !== null && this.props.users !== null) if (props.users.length < this.props.users.length) this.props.getAll();
 	        }
 	    }, {
 	        key: 'render',
@@ -33105,6 +33103,10 @@
 	
 	var _reactRouter = __webpack_require__(/*! react-router */ 160);
 	
+	var _loader = __webpack_require__(/*! ../core/loader */ 246);
+	
+	var _loader2 = _interopRequireDefault(_loader);
+	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
@@ -33123,38 +33125,36 @@
 	    }
 	
 	    _createClass(EditedUserContainer, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            // if(this.props.editedUser === undefined && this.props.params.userid)  {              
-	            //     this.props.getById(this.props.params.userid);   
-	            // }
-	            // else if(this.props.editedUser !== undefined && this.props.editedUser._id !== this.props.params.userid)
-	            // {
-	            //     this.props.getById(this.props.params.userid);
-	            // }
-	            // else if(!this.props.params.userid){
-	            //     this.props.setClientErrors();
-	            //     this.props.getById();
-	            // }
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            //here we get user by id from server
+	            if (!this.props.editedUser) {
+	                this.props.getById(this.props.params.userid);
+	            }
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            // if(props.editedUser === undefined && this.props.params.userid){            
-	            //     this.props.getById(this.props.params.userid); 
-	            // }else if(props.editedUser !== undefined && props.editedUser._id !== this.props.params.userid)
-	            // {
-	            //     this.props.getById(this.props.params.userid);
-	            // }
-	            // else if(props.editedUser !== undefined && props.editedUser._id !== undefined && !this.props.params.userid){
-	            //    this.props.router.push(`/adminprofile/edituserprofile/${props.editedUser._id}`); 
-	            // }        
+	            //get user from server after creation or update
+	            if (!this.props.editedUser) {
+	                this.props.getById(this.props.params.userid);
+	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_profile2.default, { user: this.props.editedUser, updateUser: this.props.updateUser, createUser: this.props.createUser,
-	                isCurrentUser: false, showLoader: this.props.showLoader, errors: this.props.errors });
+	            if (this.props.editedUser) {
+	                return _react2.default.createElement(_profile2.default, { user: this.props.editedUser,
+	                    updateClientUser: this.props.updateClientUser,
+	                    updateUser: this.props.UpdateUser,
+	                    errors: this.props.errors,
+	                    canSubmit: this.props.clienterrors,
+	                    setClientErrors: this.props.setClientErrors,
+	                    clearAll: this.props.clearAll,
+	                    showLoader: this.props.showLoader });
+	            } else {
+	                return _react2.default.createElement(_loader2.default, null);
+	            }
 	        }
 	    }]);
 	
@@ -33184,6 +33184,9 @@
 	        },
 	        setClientErrors: function setClientErrors() {
 	            dispatch(_error2.default.SET_CLIENT_VALIDATION_ERRORS());
+	        },
+	        updateClientUser: function updateClientUser(user) {
+	            dispatch(_user2.default.UPDATE_CLIENT_USER(user));
 	        }
 	
 	    };
