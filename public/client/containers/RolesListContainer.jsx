@@ -9,13 +9,11 @@ class RolesListContainer extends Component {
     state = {  }
 
     componentWillMount(){
-        if(this.props.roles === undefined || this.props.roles.length <= 1){
-            this.props.getAll();
-        }
+        this.props.getAll();
     }
 
     componentWillReceiveProps(props){
-        if(props.roles === undefined || props.roles.length <= 1){
+        if(props.roles === undefined){
             this.props.getAll();
         }
     }

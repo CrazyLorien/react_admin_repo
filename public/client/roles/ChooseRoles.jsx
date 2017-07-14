@@ -23,22 +23,21 @@ class ChooseRoles extends Component {
 
     checkRoles(roles, role){
         let newRoles = [];
-        let index = -1;
         var count = roles.filter((ur, ind) => { 
-            if(ur.name !== role.name){
+            if(ur.name === role.name){
                 return ur;
             }
-            else{
-                index = ind;
-            }
+            
         });
 
+        var index = roles.indexOf(role.name);
         if(count.length > 0)
         {
-            roles.push(role)
-        }
-        else{
             roles.splice(index, 1);
+            
+        }
+        else{          
+            roles.push(role);
         }
 
         return newRoles.concat(roles);

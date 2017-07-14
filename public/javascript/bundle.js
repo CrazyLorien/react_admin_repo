@@ -65,7 +65,7 @@
 /******/ 	}
 /******/ 	
 /******/ 	var hotApplyOnUpdate = true;
-/******/ 	var hotCurrentHash = "6752e9706b3c6baaea34"; // eslint-disable-line no-unused-vars
+/******/ 	var hotCurrentHash = "2ebb528ee9acde7927b5"; // eslint-disable-line no-unused-vars
 /******/ 	var hotCurrentModuleData = {};
 /******/ 	var hotCurrentParents = []; // eslint-disable-line no-unused-vars
 /******/ 	
@@ -26908,11 +26908,11 @@
 	        var _this = _possibleConstructorReturn(this, (Profile.__proto__ || Object.getPrototypeOf(Profile)).call(this));
 	
 	        _this.clearAll = function () {
-	            //this.setState( { canSubmit : true});
+	            //this.props.clearAll();
 	        };
 	
 	        _this.setClientErrors = function () {
-	            //this.setState ({ canSubmit : false}) 
+	            //this.props.setClientErrors();
 	        };
 	
 	        _this.handleChange = _this.handleChange.bind(_this);
@@ -32057,19 +32057,17 @@
 	        key: "checkRoles",
 	        value: function checkRoles(roles, role) {
 	            var newRoles = [];
-	            var index = -1;
 	            var count = roles.filter(function (ur, ind) {
-	                if (ur.name !== role.name) {
+	                if (ur.name === role.name) {
 	                    return ur;
-	                } else {
-	                    index = ind;
 	                }
 	            });
 	
+	            var index = roles.indexOf(role.name);
 	            if (count.length > 0) {
-	                roles.push(role);
-	            } else {
 	                roles.splice(index, 1);
+	            } else {
+	                roles.push(role);
 	            }
 	
 	            return newRoles.concat(roles);
@@ -32734,6 +32732,9 @@
 	Object.defineProperty(exports, "__esModule", {
 	    value: true
 	});
+	
+	var _extends = Object.assign || function (target) { for (var i = 1; i < arguments.length; i++) { var source = arguments[i]; for (var key in source) { if (Object.prototype.hasOwnProperty.call(source, key)) { target[key] = source[key]; } } } return target; };
+	
 	exports.default = roles;
 	
 	var _utils = __webpack_require__(/*! ../utils/utils */ 292);
@@ -32743,7 +32744,7 @@
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
 	function roles() {
-	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { rolesList: [], showReload: true };
+	    var state = arguments.length > 0 && arguments[0] !== undefined ? arguments[0] : { rolesList: [], editedRole: { Permissions: [] }, showReload: true };
 	    var action = arguments[1];
 	
 	    switch (action.type) {
@@ -32752,9 +32753,12 @@
 	        case 'CREATE_ROLE_START':
 	        case 'GET_ROLE_BY_ID_START':
 	        case 'CREATE_ROLE_START':
-	        case 'GET_ROLE_BY_ID_START':
 	            {
-	                return Object.assign({}, { rolesList: state.rolesList, editedRole: state.editedRole || { Permissions: [] } }, { showReload: true });
+	                return _extends({}, state, {
+	                    rolesList: state.rolesList,
+	                    editedRole: state.editedRole || { Permissions: [] },
+	                    showReload: true
+	                });
 	            }
 	        case 'RECEIVE_ALL_ROLES_SUCCESS':
 	            {
@@ -32779,12 +32783,10 @@
 	                var _roles4 = state.rolesList.filter(function (x) {
 	                    return x._id !== action.data._id;
 	                }).concat(action.data);
-	                var _role = _roles4.filter(function (x) {
-	                    return x._id === action.data._id;
-	                })[0];
+	                var _role = action.data;
 	                if (!_role) _role = { Permissions: [] };
 	
-	                return Object.assign({}, { rolesList: _roles4, editedRole: _role, showReload: false });
+	                return _extends({}, state, { rolesList: _roles4, editedRole: _role, showReload: false });
 	            }
 	        case 'CLEAR_EDITED_ROLE':
 	            {
@@ -33252,14 +33254,12 @@
 	    _createClass(RolesListContainer, [{
 	        key: 'componentWillMount',
 	        value: function componentWillMount() {
-	            if (this.props.roles === undefined || this.props.roles.length <= 1) {
-	                this.props.getAll();
-	            }
+	            this.props.getAll();
 	        }
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            if (props.roles === undefined || props.roles.length <= 1) {
+	            if (props.roles === undefined) {
 	                this.props.getAll();
 	            }
 	        }
@@ -33483,6 +33483,8 @@
 	
 	function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 	
+	function _defineProperty(obj, key, value) { if (key in obj) { Object.defineProperty(obj, key, { value: value, enumerable: true, configurable: true, writable: true }); } else { obj[key] = value; } return obj; }
+	
 	function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
 	
 	function _possibleConstructorReturn(self, call) { if (!self) { throw new ReferenceError("this hasn't been initialised - super() hasn't been called"); } return call && (typeof call === "object" || typeof call === "function") ? call : self; }
@@ -33499,13 +33501,10 @@
 	    }
 	
 	    _createClass(EditedRoleContainer, [{
-	        key: 'componentDidMount',
-	        value: function componentDidMount() {
-	            if (this.props.editedRole === undefined && this.props.params.roleId) {
+	        key: 'componentWillMount',
+	        value: function componentWillMount() {
+	            if (this.props.editedRole._id === undefined && this.props.params.roleId) {
 	                this.props.getById(this.props.params.roleId);
-	            } else if (!this.props.params.roleId) {
-	                this.props.setClientErrors();
-	                this.props.getById();
 	            }
 	
 	            if (this.props.permissions.length <= 0) {
@@ -33515,21 +33514,23 @@
 	    }, {
 	        key: 'componentWillReceiveProps',
 	        value: function componentWillReceiveProps(props) {
-	            if (props.editedRole._id !== undefined && !this.props.params.roleId) {
-	                this.props.clearAll();
-	                this.props.router.push('/adminprofile/editRole/' + props.editedRole._id);
+	            if (this.props.editedRole._id === undefined && this.props.params.roleId) {
+	                this.props.getById(this.props.params.roleId);
 	            }
 	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
-	            return _react2.default.createElement(_editRole2.default, { role: this.props.editedRole,
+	            return _react2.default.createElement(_editRole2.default, _defineProperty({ role: this.props.editedRole,
 	                updateRole: this.props.updateRole,
 	                permissions: this.props.permissions,
 	                createRole: this.props.createRole,
 	                errors: this.props.errors,
 	                setClientErrors: this.props.setClientErrors,
-	                showLoader: this.props.showLoader });
+	                showLoader: this.props.showLoader,
+	                isErrors: this.props.clientErrors,
+	                clearAll: this.props.clearAll
+	            }, 'setClientErrors', this.props.setClientErrors));
 	        }
 	    }]);
 	
@@ -33674,20 +33675,24 @@
 	
 	        var _this = _possibleConstructorReturn(this, (ChooseRolesPermissions.__proto__ || Object.getPrototypeOf(ChooseRolesPermissions)).call(this, props));
 	
-	        _this.state = { role: { name: "" }, canSubmit: true };
-	
 	        _this.handleChange = function (event) {
-	            var role = {};
-	            role.name = event.target.value;
+	            _this.props.role.name = event.target.value;
 	        };
 	
-	        _this.handlePermissionsChange = function (permission) {
+	        debugger;
+	        _this.handlePermissionsChange = _this.handlePermissionsChange.bind(_this);
+	        return _this;
+	    }
+	
+	    _createClass(ChooseRolesPermissions, [{
+	        key: 'handlePermissionsChange',
+	        value: function handlePermissionsChange(permission) {
 	            //check is this permission
-	            var count = _this.props.role.Permissions.filter(function (pm) {
+	            var count = this.props.role.Permissions.filter(function (pm) {
 	                return pm === permission.name;
 	            });
 	
-	            var role = _this.props.role;
+	            var role = this.props.role;
 	            var index = role.Permissions.indexOf(permission.name);
 	            if (count.length > 0) {
 	                role.Permissions.splice(index, 1);
@@ -33695,34 +33700,12 @@
 	                role.Permissions.push(permission.name);
 	            }
 	
-	            role.name = _this.state.role.name;
 	            if (role._id) {
-	                _this.props.updateRole(role);
+	                this.props.updateRole(role);
 	            } else {
-	                _this.props.createRole(role);
+	                this.props.createRole(role);
 	            }
-	        };
-	
-	        _this.clearAll = function () {
-	            _this.setState({ canSubmit: true });
-	        };
-	
-	        _this.setClientErrors = function () {
-	            _this.setState({ canSubmit: false });
-	        };
-	
-	        return _this;
-	    }
-	
-	    _createClass(ChooseRolesPermissions, [{
-	        key: 'componentDidMount',
-	
-	
-	        //lifecycle hooks
-	        value: function componentDidMount() {}
-	    }, {
-	        key: 'componentWillReceiveProps',
-	        value: function componentWillReceiveProps(props) {}
+	        }
 	    }, {
 	        key: 'render',
 	        value: function render() {
@@ -33748,11 +33731,12 @@
 	                    _react2.default.createElement(
 	                        'div',
 	                        null,
-	                        _react2.default.createElement(_validator2.default, { data: [{ "name": this.state.role.name, "propname": "rolename", validationRule: ['require'] }], setClientErrors: this.setClientErrors, clearAll: this.clearAll, canSubmit: this.state.canSubmit
+	                        _react2.default.createElement(_validator2.default, { data: [{ name: this.props.role.name, propname: 'rolename', validationRule: ['require'] }],
+	                            setClientErrors: this.props.setClientErrors, clearAll: this.props.clearAll, canSubmit: this.props.isErrors
 	                        })
 	                    )
 	                ),
-	                this.state.canSubmit ? _react2.default.createElement(
+	                !this.props.isErrors ? _react2.default.createElement(
 	                    'div',
 	                    null,
 	                    _react2.default.createElement(
@@ -33765,14 +33749,14 @@
 	                            //here we should check does role contain in user roles and then check or uncheck it  
 	                            return _react2.default.createElement(
 	                                'div',
-	                                { className: 'row' },
+	                                { className: 'row', key: pm._id },
 	                                _react2.default.createElement(
 	                                    'div',
-	                                    { className: 'col s12', onClick: _this2.handlePermissionsChange.bind(null, pm) },
-	                                    _react2.default.createElement('input', { type: 'checkbox', id: pm.name, checked: checked }),
+	                                    { className: 'col s12', onClick: _this2.handlePermissionsChange.bind(_this2, pm) },
+	                                    _react2.default.createElement('input', { type: 'checkbox', id: pm.name, checked: checked, onChange: _this2.handlePermissionsChange.bind(_this2, pm) }),
 	                                    _react2.default.createElement(
 	                                        'label',
-	                                        { 'for': pm.name },
+	                                        null,
 	                                        pm.name
 	                                    )
 	                                )

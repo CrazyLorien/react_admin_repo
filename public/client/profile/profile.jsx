@@ -40,11 +40,11 @@ class Profile extends Component {
    
 
     clearAll =  () => {
-        //this.setState( { canSubmit : true});
+        //this.props.clearAll();
     }
 
     setClientErrors = () => {
-       //this.setState ({ canSubmit : false}) 
+        //this.props.setClientErrors();
     }
 
    

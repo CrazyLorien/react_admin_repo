@@ -13,14 +13,9 @@ class EditedRoleContainer extends Component {
         super(props);
     }
 
-    componentDidMount(){ 
-        if(this.props.editedRole === undefined && this.props.params.roleId)  {              
+    componentWillMount(){ 
+        if(this.props.editedRole._id === undefined && this.props.params.roleId)  {              
             this.props.getById(this.props.params.roleId);   
-        }
-       
-        else if(!this.props.params.roleId){
-            this.props.setClientErrors();
-            this.props.getById();
         }
 
         if(this.props.permissions.length <= 0){
@@ -28,10 +23,9 @@ class EditedRoleContainer extends Component {
         }
     }
 
-     componentWillReceiveProps(props){
-        if(props.editedRole._id !== undefined && !this.props.params.roleId){
-           this.props.clearAll();
-           this.props.router.push(`/adminprofile/editRole/${props.editedRole._id}`); 
+    componentWillReceiveProps(props){
+        if(this.props.editedRole._id === undefined && this.props.params.roleId)  {              
+            this.props.getById(this.props.params.roleId);   
         }
     }
 
@@ -43,7 +37,11 @@ class EditedRoleContainer extends Component {
                          createRole = { this.props.createRole} 
                          errors = { this.props.errors }
                          setClientErrors= { this.props.setClientErrors} 
-                         showLoader = { this.props.showLoader } />
+                         showLoader = { this.props.showLoader }
+                         isErrors = { this.props.clientErrors }
+                         clearAll = { this.props.clearAll }
+                         setClientErrors = { this.props.setClientErrors }
+                          />
         );
     }
 }
